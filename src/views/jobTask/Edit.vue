@@ -56,6 +56,7 @@ export default {
         description: '',
         job_id: '',
         task_sequence: 0,
+        exec_timeout: 60,
         parent_id: '',
         exec_action: '',
         exec_address: '',
@@ -89,6 +90,7 @@ export default {
         this.form.description = jobTask.description
         this.form.job_id = jobTask.job_id
         this.form.task_sequence = jobTask.task_sequence
+        this.form.exec_timeout = jobTask.exec_timeout
         this.form.parent_id = jobTask.parent_id
         this.form.exec_action = jobTask.exec_action
         this.form.exec_address = jobTask.exec_address

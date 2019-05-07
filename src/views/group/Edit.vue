@@ -29,7 +29,7 @@
         </div>
       </b-tab-item>
       <b-tab-item label="Permissions">
-        <GroupUserList></GroupUserList>
+        <GroupPermissionList></GroupPermissionList>
       </b-tab-item>
       <b-tab-item label="Users">
         <GroupUserList></GroupUserList>
@@ -45,12 +45,14 @@
 
 <script>
 import GroupForm from '@/components/group/Form.vue'
+import GroupPermissionList from '@/views/groupPermission/List.vue'
 import GroupUserList from '@/views/groupUser/List.vue'
 
 export default {
   name: 'GroupEdit',
   components: {
     GroupForm,
+    GroupPermissionList,
     GroupUserList,
   },
   data() {
@@ -62,6 +64,7 @@ export default {
         description: '',
         active: true,
       },
+      activeTab: 0,
     }
   },
   computed: {

@@ -63,6 +63,7 @@ export default {
         name: '',
         code: '',
         description: '',
+        exec_timeout: 60,
         job_type: true,
         active: true,
       },
@@ -88,6 +89,7 @@ export default {
         this.form.name = job.name
         this.form.code = job.code
         this.form.description = job.description
+        this.form.exec_timeout = job.exec_timeout
         this.form.job_type = job.job_type
         this.form.active = job.active
       }

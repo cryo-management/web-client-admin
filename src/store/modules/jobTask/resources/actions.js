@@ -35,6 +35,7 @@ export default {
         commit('clearError', null, inRoot)
         payload.max_retry_attempts = +payload.max_retry_attempts
         payload.task_sequence = +payload.task_sequence
+        payload.exec_timeout = +payload.exec_timeout
         const response = await createJobTask(payload.job_id, payload)
         commit('setJobTask', response.data)
         router.push({
@@ -72,6 +73,7 @@ export default {
         commit('clearError', null, inRoot)
         payload.max_retry_attempts = +payload.max_retry_attempts
         payload.task_sequence = +payload.task_sequence
+        payload.exec_timeout = +payload.exec_timeout
         const response = await updateJobTask(
           payload.job_id,
           payload.id,

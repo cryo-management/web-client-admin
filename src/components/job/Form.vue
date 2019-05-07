@@ -17,6 +17,14 @@
         <b-input v-model="form.description" type="textarea" />
       </b-field>
 
+      <b-field
+        label="Timeout:"
+        :type="execTimeoutType"
+        :message="execTimeoutFeedback"
+      >
+        <b-input v-model="form.exec_timeout" />
+      </b-field>
+
       <b-field label="Type" :type="typeType" :message="typeFeedback">
         <b-select v-model="form.job_type" expanded>
           <option value="system">System</option>
@@ -55,6 +63,7 @@ export default {
           name: '',
           code: '',
           description: '',
+          exec_timeout: 60,
           job_type: '',
           active: false,
         }
@@ -113,6 +122,23 @@ export default {
         return ''
       }
     },
+    execTimeoutState() {
+      return this.form.exec_timeout.length > 0
+    },
+    execTimeoutType() {
+      if (this.form.exec_timeout.length === 0) {
+        return 'is-danger'
+      } else {
+        return 'is-success'
+      }
+    },
+    execTimeoutFeedback() {
+      if (this.form.exec_timeout.length === 0) {
+        return 'Timeout is required'
+      } else {
+        return ''
+      }
+    },
     typeState() {
       return this.form.job_type.length > 0
     },
@@ -135,6 +161,7 @@ export default {
         this.nameState &&
         this.codeState &&
         this.descriptionState &&
+        this.execTimeoutState &&
         this.typeState
       )
     },

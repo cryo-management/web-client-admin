@@ -27,6 +27,14 @@
             <b-input v-model="form.task_sequence" expanded />
           </b-field>
 
+          <b-field
+            label="Timeout:"
+            :type="execTimeoutType"
+            :message="execTimeoutFeedback"
+          >
+            <b-input v-model="form.exec_timeout" />
+          </b-field>
+
           <b-field label="Dependence">
             <b-input v-model="form.parent_id" />
           </b-field>
@@ -154,6 +162,7 @@ export default {
           description: '',
           job_id: this.$route.params.job_id,
           task_sequence: 0,
+          exec_timeout: 60,
           parent_id: '',
           exec_action: '',
           exec_address: '',
@@ -237,6 +246,23 @@ export default {
     taskSequenceFeedback() {
       if (this.form.task_sequence.length === 0) {
         return 'Sequence is required'
+      } else {
+        return ''
+      }
+    },
+    execTimeoutState() {
+      return this.form.exec_timeout.length > 0
+    },
+    execTimeoutType() {
+      if (this.form.exec_timeout.length === 0) {
+        return 'is-danger'
+      } else {
+        return 'is-success'
+      }
+    },
+    execTimeoutFeedback() {
+      if (this.form.exec_timeout.length === 0) {
+        return 'Timeout is required'
       } else {
         return ''
       }
@@ -405,6 +431,7 @@ export default {
         this.codeState &&
         this.descriptionState &&
         this.taskSequenceState &&
+        this.execTimeoutState &&
         this.actionOnFailState &&
         this.maxRetryState &&
         this.execActionState &&

@@ -32,6 +32,9 @@ import UserGroupCreate from '../views/userGroup/Create.vue'
 import UserGroupList from '../views/userGroup/List.vue'
 import GroupUserCreate from '../views/groupUser/Create.vue'
 import GroupUserList from '../views/groupUser/List.vue'
+import GroupPermissionCreate from '../views/groupPermission/Create.vue'
+import GroupPermissionList from '../views/groupPermission/List.vue'
+import GroupPermissionEdit from '../views/groupPermission/Edit.vue'
 
 Vue.use(Router)
 
@@ -288,6 +291,30 @@ export default new Router({
       path: '/admin/groups/:group_id/users',
       name: 'GroupUserList',
       component: GroupUserList,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/admin/groups/:group_id/permissions/create',
+      name: 'GroupPermissionCreate',
+      component: GroupPermissionCreate,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/admin/groups/:group_id/permissions',
+      name: 'GroupPermissionList',
+      component: GroupPermissionList,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/admin/groups/:group_id/permissions/:permission_id',
+      name: 'GroupPermissionEdit',
+      component: GroupPermissionEdit,
       meta: {
         requiresAuth: true,
       },

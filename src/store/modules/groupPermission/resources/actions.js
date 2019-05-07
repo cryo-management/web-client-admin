@@ -1,24 +1,24 @@
 import router from '../../../../router'
 import {
-  getJobs,
-  createJob,
-  getJob,
-  updateJob,
-  deleteJob,
-} from '../../../../services/job'
+  getGroupPermissions,
+  createGroupPermission,
+  getGroupPermission,
+  updateGroupPermission,
+  deleteGroupPermission,
+} from '../../../../services/groupPermission'
 
 const inRoot = {
   root: true,
 }
 
 export default {
-  getJobs({ commit }) {
+  getGroupPermissions({ commit }, payload) {
     return new Promise(async (resolve, reject) => {
       try {
         commit('loading', null, inRoot)
         commit('clearError', null, inRoot)
-        const response = await getJobs()
-        commit('setJobs', response.data)
+        const response = await getGroupPermissions(payload)
+        commit('setGroupPermissions', response.data)
         resolve(response)
       } catch (err) {
         reject(err)
@@ -28,16 +28,16 @@ export default {
       }
     })
   },
-  createJob({ commit }, payload) {
+  createGroupPermission({ commit }, payload) {
     return new Promise(async (resolve, reject) => {
       try {
         commit('loading', null, inRoot)
         commit('clearError', null, inRoot)
-        payload.exec_timeout = +payload.exec_timeout
-        const response = await createJob(payload)
-        commit('setJob', response.data)
+        payload.permission_type = +payload.permission_type
+        const response = await createGroupPermission(payload.group_id, payload)
+        commit('setGroupPermission', response.data)
         router.push({
-          path: '/admin/jobs',
+          path: `/admin/groups/${payload.group_id}`,
         })
         resolve(response)
       } catch (err) {
@@ -48,13 +48,16 @@ export default {
       }
     })
   },
-  getJob({ commit }, payload) {
+  getGroupPermission({ commit }, payload) {
     return new Promise(async (resolve, reject) => {
       try {
         commit('loading', null, inRoot)
         commit('clearError', null, inRoot)
-        const response = await getJob(payload)
-        commit('setJob', response.data)
+        const response = await getGroupPermission(
+          payload.group_id,
+          payload.permission_id
+        )
+        commit('setGroupPermission', response.data)
         resolve(response)
       } catch (err) {
         reject(err)
@@ -64,14 +67,18 @@ export default {
       }
     })
   },
-  updateJob({ commit }, payload) {
+  updateGroupPermission({ commit }, payload) {
     return new Promise(async (resolve, reject) => {
       try {
         commit('loading', null, inRoot)
         commit('clearError', null, inRoot)
-        payload.exec_timeout = +payload.exec_timeout
-        const response = await updateJob(payload.id, payload)
-        commit('setJob', response.data)
+        payload.permission_type = +payload.permission_type
+        const response = await updateGroupPermission(
+          payload.group_id,
+          payload.id,
+          payload
+        )
+        commit('setGroupPermission', response.data)
         resolve(response)
       } catch (err) {
         reject(err)
@@ -81,12 +88,15 @@ export default {
       }
     })
   },
-  deleteJob({ commit }, payload) {
+  deleteGroupPermission({ commit }, payload) {
     return new Promise(async (resolve, reject) => {
       try {
         commit('loading', null, inRoot)
         commit('clearError', null, inRoot)
-        const response = await deleteJob(payload)
+        const response = await deleteGroupPermission(
+          payload.group_id,
+          payload.permission_id
+        )
         resolve(response)
       } catch (err) {
         reject(err)
@@ -96,14 +106,14 @@ export default {
       }
     })
   },
-  setJobCreatedOnList({ commit, getters }, payload) {
+  setGroupPermissionCreatedOnList({ commit, getters }, payload) {
     return new Promise(async (resolve, reject) => {
       try {
         commit('loading', null, inRoot)
         commit('clearError', null, inRoot)
-        const jobs = getters.jobs
-        const result = [...jobs, payload]
-        commit('setJobs', result)
+        const groupPermissions = getters.groupPermissions
+        const result = [...groupPermissions, payload]
+        commit('setGroupPermissions', result)
         resolve(result)
       } catch (err) {
         reject(err)
@@ -113,16 +123,16 @@ export default {
       }
     })
   },
-  setJobChangedOnList({ commit, getters }, payload) {
+  setGroupPermissionChangedOnList({ commit, getters }, payload) {
     return new Promise(async (resolve, reject) => {
       try {
         commit('loading', null, inRoot)
         commit('clearError', null, inRoot)
-        const jobs = getters.jobs
-        const result = jobs.map((job) => {
-          return job.id === payload.id ? payload : job
+        const groupPermissions = getters.groupPermissions
+        const result = groupPermissions.map((groupPermission) => {
+          return groupPermission.id === payload.id ? payload : groupPermission
         })
-        commit('setJobs', result)
+        commit('setGroupPermissions', result)
         resolve(result)
       } catch (err) {
         reject(err)
@@ -132,10 +142,10 @@ export default {
       }
     })
   },
-  setJobChangedOnJob({ commit }, payload) {
+  setGroupPermissionChangedOnGroupPermission({ commit }, payload) {
     commit('loading', null, inRoot)
     commit('clearError', null, inRoot)
-    commit('setJob', payload)
+    commit('setGroupPermission', payload)
     commit('loaded', null, inRoot)
   },
 }

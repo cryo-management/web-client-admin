@@ -12,6 +12,7 @@ import currency from './modules/currency/store'
 import job from './modules/job/store'
 import jobTask from './modules/jobTask/store'
 import jobFollower from './modules/jobFollower/store'
+import groupPermission from './modules/groupPermission/store'
 
 Vue.use(Vuex)
 
@@ -29,6 +30,7 @@ export default new Vuex.Store({
     job,
     jobTask,
     jobFollower,
+    groupPermission,
   },
   state: {
     loading: false,
