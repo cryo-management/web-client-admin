@@ -19,12 +19,22 @@
         </ul>
       </nav>
     </div>
-    <div class="column is-4 is-offset-4">
-      <b-notification v-if="error" type="is-danger">
-        {{ error }}
-      </b-notification>
-      <GroupForm :form="form" @formToParent="submit" />
-    </div>
+    <b-tabs v-model="activeTab" type="is-boxed" position="is-centered">
+      <b-tab-item label="Group">
+        <div class="column is-4 is-offset-4">
+          <b-notification v-if="error" type="is-danger">
+            {{ error }}
+          </b-notification>
+          <GroupForm :form="form" @formToParent="submit" />
+        </div>
+      </b-tab-item>
+      <b-tab-item label="Permissions">
+        <GroupUserList></GroupUserList>
+      </b-tab-item>
+      <b-tab-item label="Users">
+        <GroupUserList></GroupUserList>
+      </b-tab-item>
+    </b-tabs>
     <b-loading
       :is-full-page="true"
       :active.sync="loading"
@@ -35,11 +45,13 @@
 
 <script>
 import GroupForm from '@/components/group/Form.vue'
+import GroupUserList from '@/views/groupUser/List.vue'
 
 export default {
   name: 'GroupEdit',
   components: {
     GroupForm,
+    GroupUserList,
   },
   data() {
     return {

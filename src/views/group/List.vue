@@ -81,19 +81,6 @@
             </div>
           </b-table-column>
 
-          <b-table-column field="description" label="Description" sortable>
-            <vm-popover
-              ref="popover"
-              trigger="hover"
-              placement="top"
-              :content="props.row.description"
-            >
-            </vm-popover>
-            <div v-popover:popover v-line-clamp:20="1">
-              {{ props.row.description }}
-            </div>
-          </b-table-column>
-
           <b-table-column label="Active" sortable centered>
             <b-icon pack="fas" :icon="props.row.active ? 'check' : ''" />
           </b-table-column>
@@ -123,7 +110,7 @@
       <b-modal :active.sync="isModalDelete" has-modal-card>
         <modal-yes-no
           :message="'Are you sure you want to delete this record?'"
-          :data="id"
+          :data="{ id: id }"
           :method="deleteGroup"
         ></modal-yes-no>
       </b-modal>
@@ -183,11 +170,12 @@ export default {
         console.log(err)
       }
     },
-    async deleteGroup(id) {
+    async deleteGroup(payload) {
       this.isModalDelete = true
-      if (id) {
+      if (payload) {
         try {
-          await this.$store.dispatch('group/deleteGroup', id)
+          await this.$store.dispatch('group/deleteGroup', payload.id)
+          this.getGroups()
         } catch (err) {
           console.log(err)
         }

@@ -110,7 +110,7 @@
       <b-modal :active.sync="isModalDelete" has-modal-card>
         <modal-yes-no
           :message="'Are you sure you want to delete this record?'"
-          :data="id"
+          :data="{ id: id }"
           :method="deleteCurrency"
         ></modal-yes-no>
       </b-modal>
@@ -170,11 +170,12 @@ export default {
         console.log(err)
       }
     },
-    async deleteCurrency(id) {
+    async deleteCurrency(payload) {
       this.isModalDelete = true
-      if (id) {
+      if (payload) {
         try {
-          await this.$store.dispatch('currency/deleteCurrency', id)
+          await this.$store.dispatch('currency/deleteCurrency', payload.id)
+          this.getCurrencies()
         } catch (err) {
           console.log(err)
         }

@@ -41,6 +41,9 @@
         <router-link class="navbar-item" to="/admin/lookups">
           Lookups
         </router-link>
+        <router-link class="navbar-item" to="/admin/jobs">
+          Jobs
+        </router-link>
       </div>
 
       <div class="navbar-end">

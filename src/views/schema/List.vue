@@ -81,19 +81,6 @@
             </div>
           </b-table-column>
 
-          <b-table-column field="description" label="Description" sortable>
-            <vm-popover
-              ref="popover"
-              trigger="hover"
-              placement="top"
-              :content="props.row.description"
-            >
-            </vm-popover>
-            <div v-popover:popover v-line-clamp:20="1">
-              {{ props.row.description }}
-            </div>
-          </b-table-column>
-
           <b-table-column label="Module" sortable centered>
             <b-icon pack="fas" :icon="props.row.module ? 'check' : ''" />
           </b-table-column>
@@ -127,7 +114,7 @@
       <b-modal :active.sync="isModalDelete" has-modal-card>
         <modal-yes-no
           :message="'Are you sure you want to delete this record?'"
-          :data="id"
+          :data="{ id: id }"
           :method="deleteSchema"
         ></modal-yes-no>
       </b-modal>
@@ -187,11 +174,12 @@ export default {
         console.log(err)
       }
     },
-    async deleteSchema(id) {
+    async deleteSchema(payload) {
       this.isModalDelete = true
-      if (id) {
+      if (payload) {
         try {
-          await this.$store.dispatch('schema/deleteSchema', id)
+          await this.$store.dispatch('schema/deleteSchema', payload.id)
+          this.getSchemas()
         } catch (err) {
           console.log(err)
         }

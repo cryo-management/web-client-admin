@@ -110,7 +110,7 @@
       <b-modal :active.sync="isModalDelete" has-modal-card>
         <modal-yes-no
           :message="'Are you sure you want to delete this record?'"
-          :data="id"
+          :data="{ id: id }"
           :method="deleteLanguage"
         ></modal-yes-no>
       </b-modal>
@@ -170,11 +170,12 @@ export default {
         console.log(err)
       }
     },
-    async deleteLanguage(id) {
+    async deleteLanguage(payload) {
       this.isModalDelete = true
-      if (id) {
+      if (payload) {
         try {
-          await this.$store.dispatch('language/deleteLanguage', id)
+          await this.$store.dispatch('language/deleteLanguage', payload.id)
+          this.getLanguages()
         } catch (err) {
           console.log(err)
         }

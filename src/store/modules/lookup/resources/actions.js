@@ -118,7 +118,7 @@ export default {
         commit('clearError', null, inRoot)
         const lookups = getters.lookups
         const result = lookups.map((lookup) => {
-          return lookup._id === payload._id ? payload : lookup
+          return lookup.id === payload.id ? payload : lookup
         })
         commit('setLookups', result)
         resolve(result)

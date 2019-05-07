@@ -118,7 +118,7 @@ export default {
         commit('clearError', null, inRoot)
         const currencies = getters.currencies
         const result = currencies.map((currency) => {
-          return currency._id === payload._id ? payload : currency
+          return currency.id === payload.id ? payload : currency
         })
         commit('setCurrencies', result)
         resolve(result)

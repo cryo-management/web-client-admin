@@ -14,7 +14,7 @@
         :type="descriptionType"
         :message="descriptionFeedback"
       >
-        <b-input v-model="form.description" />
+        <b-input v-model="form.description" type="textarea" />
       </b-field>
 
       <b-field label="Active" type="is-success">

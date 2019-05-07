@@ -119,7 +119,7 @@ export default {
         commit('clearError', null, inRoot)
         const languages = getters.languages
         const result = languages.map((language) => {
-          return language._id === payload._id ? payload : language
+          return language.id === payload.id ? payload : language
         })
         commit('setLanguages', result)
         resolve(result)

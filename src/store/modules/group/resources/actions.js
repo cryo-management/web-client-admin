@@ -5,6 +5,10 @@ import {
   getGroup,
   updateGroup,
   deleteGroup,
+  getActiveGroups,
+  getUsers,
+  addUser,
+  removeUser,
 } from '../../../../services/group'
 
 const inRoot = {
@@ -118,7 +122,7 @@ export default {
         commit('clearError', null, inRoot)
         const groups = getters.groups
         const result = groups.map((group) => {
-          return group._id === payload._id ? payload : group
+          return group.id === payload.id ? payload : group
         })
         commit('setGroups', result)
         resolve(result)
@@ -135,5 +139,71 @@ export default {
     commit('clearError', null, inRoot)
     commit('setGroup', payload)
     commit('loaded', null, inRoot)
+  },
+  getActiveGroups({ commit }) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        commit('loading', null, inRoot)
+        commit('clearError', null, inRoot)
+        const response = await getActiveGroups()
+        // commit('setGroups', response.data)
+        resolve(response)
+      } catch (err) {
+        reject(err)
+        commit('error', err, inRoot)
+      } finally {
+        commit('loaded', null, inRoot)
+      }
+    })
+  },
+  getUsers({ commit }, payload) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        commit('loading', null, inRoot)
+        commit('clearError', null, inRoot)
+        const response = await getUsers(payload)
+        // commit('setUser', response.data)
+        resolve(response)
+      } catch (err) {
+        reject(err)
+        commit('error', err, inRoot)
+      } finally {
+        commit('loaded', null, inRoot)
+      }
+    })
+  },
+  addUser({ commit }, payload) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        commit('loading', null, inRoot)
+        commit('clearError', null, inRoot)
+        const response = await addUser(payload.group_id, payload.user_id)
+        // commit('setUser', response.data)
+        router.push({
+          path: `/admin/groups/${payload.group_id}`,
+        })
+        resolve(response)
+      } catch (err) {
+        reject(err)
+        commit('error', err, inRoot)
+      } finally {
+        commit('loaded', null, inRoot)
+      }
+    })
+  },
+  removeUser({ commit }, payload) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        commit('loading', null, inRoot)
+        commit('clearError', null, inRoot)
+        const response = await removeUser(payload.group_id, payload.user_id)
+        resolve(response)
+      } catch (err) {
+        reject(err)
+        commit('error', err, inRoot)
+      } finally {
+        commit('loaded', null, inRoot)
+      }
+    })
   },
 }

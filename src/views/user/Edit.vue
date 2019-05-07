@@ -19,12 +19,19 @@
         </ul>
       </nav>
     </div>
-    <div class="column is-4 is-offset-4">
-      <b-notification v-if="error" type="is-danger">
-        {{ error }}
-      </b-notification>
-      <UserForm :form="form" @formToParent="submit" />
-    </div>
+    <b-tabs v-model="activeTab" type="is-boxed" position="is-centered">
+      <b-tab-item label="User">
+        <div class="column is-4 is-offset-4">
+          <b-notification v-if="error" type="is-danger">
+            {{ error }}
+          </b-notification>
+          <UserForm :form="form" @formToParent="submit" />
+        </div>
+      </b-tab-item>
+      <b-tab-item label="Groups">
+        <UserGroupList></UserGroupList>
+      </b-tab-item>
+    </b-tabs>
     <b-loading
       :is-full-page="true"
       :active.sync="loading"
@@ -35,11 +42,13 @@
 
 <script>
 import UserForm from '@/components/user/Form.vue'
+import UserGroupList from '@/views/userGroup/List.vue'
 
 export default {
   name: 'UserEdit',
   components: {
     UserForm,
+    UserGroupList,
   },
   data() {
     return {
@@ -53,6 +62,7 @@ export default {
         language_code: '',
         active: true,
       },
+      activeTab: 0,
     }
   },
   computed: {

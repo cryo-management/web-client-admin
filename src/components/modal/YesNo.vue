@@ -24,8 +24,8 @@ export default {
       default: '',
     },
     data: {
-      type: String,
-      default: '',
+      type: Object,
+      default: () => {},
     },
     method: {
       type: Function,

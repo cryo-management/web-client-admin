@@ -9,6 +9,9 @@ import group from './modules/group/store'
 import schema from './modules/schema/store'
 import lookup from './modules/lookup/store'
 import currency from './modules/currency/store'
+import job from './modules/job/store'
+import jobTask from './modules/jobTask/store'
+import jobFollower from './modules/jobFollower/store'
 
 Vue.use(Vuex)
 
@@ -23,6 +26,9 @@ export default new Vuex.Store({
     schema,
     lookup,
     currency,
+    job,
+    jobTask,
+    jobFollower,
   },
   state: {
     loading: false,

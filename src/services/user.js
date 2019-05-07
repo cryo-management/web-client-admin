@@ -54,3 +54,55 @@ export const deleteUser = (user_id) => {
     }
   })
 }
+
+export const getGroups = (user_id) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await axios.get(`/admin/users/${user_id}/groups`)
+      resolve(response.data)
+    } catch (err) {
+      reject(err)
+    }
+  })
+}
+
+export const addGroup = (user_id, group_id) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await axios.post(
+        `/admin/users/${user_id}/groups/${group_id}`
+      )
+      resolve(response.data)
+    } catch (err) {
+      reject(err)
+    }
+  })
+}
+
+export const removeGroup = (user_id, group_id) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await axios.delete(
+        `/admin/users/${user_id}/groups/${group_id}`
+      )
+      resolve(response.data)
+    } catch (err) {
+      reject(err)
+    }
+  })
+}
+
+export const getActiveUsers = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await axios.get('/admin/users', {
+        params: {
+          filter: { active: true },
+        },
+      })
+      resolve(response.data)
+    } catch (err) {
+      reject(err)
+    }
+  })
+}

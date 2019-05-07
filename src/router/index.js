@@ -20,6 +20,18 @@ import LookupEdit from '../views/lookup/Edit.vue'
 import CurrencyCreate from '../views/currency/Create.vue'
 import CurrencyList from '../views/currency/List.vue'
 import CurrencyEdit from '../views/currency/Edit.vue'
+import JobCreate from '../views/job/Create.vue'
+import JobList from '../views/job/List.vue'
+import JobEdit from '../views/job/Edit.vue'
+import JobTaskCreate from '../views/jobTask/Create.vue'
+import JobTaskList from '../views/jobTask/List.vue'
+import JobTaskEdit from '../views/jobTask/Edit.vue'
+import JobFollowerCreate from '../views/jobFollower/Create.vue'
+import JobFollowerList from '../views/jobFollower/List.vue'
+import UserGroupCreate from '../views/userGroup/Create.vue'
+import UserGroupList from '../views/userGroup/List.vue'
+import GroupUserCreate from '../views/groupUser/Create.vue'
+import GroupUserList from '../views/groupUser/List.vue'
 
 Vue.use(Router)
 
@@ -180,6 +192,102 @@ export default new Router({
       path: '/admin/currencies/:currency_id',
       name: 'CurrencyEdit',
       component: CurrencyEdit,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/admin/jobs/create',
+      name: 'JobCreate',
+      component: JobCreate,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/admin/jobs',
+      name: 'JobList',
+      component: JobList,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/admin/jobs/:job_id',
+      name: 'JobEdit',
+      component: JobEdit,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/admin/jobs/:job_id/tasks/create',
+      name: 'JobTaskCreate',
+      component: JobTaskCreate,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/admin/jobs/:job_id/tasks',
+      name: 'JobTaskList',
+      component: JobTaskList,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/admin/jobs/:job_id/tasks/:job_task_id',
+      name: 'JobTaskEdit',
+      component: JobTaskEdit,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/admin/jobs/:job_id/followers/add',
+      name: 'JobFollowerCreate',
+      component: JobFollowerCreate,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/admin/jobs/:job_id/followers',
+      name: 'JobFollowerList',
+      component: JobFollowerList,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/admin/users/:user_id/groups/add',
+      name: 'UserGroupCreate',
+      component: UserGroupCreate,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/admin/users/:user_id/groups',
+      name: 'UserGroupList',
+      component: UserGroupList,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/admin/groups/:group_id/users/add',
+      name: 'GroupUserCreate',
+      component: GroupUserCreate,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/admin/groups/:group_id/users',
+      name: 'GroupUserList',
+      component: GroupUserList,
       meta: {
         requiresAuth: true,
       },

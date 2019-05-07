@@ -14,7 +14,7 @@
         :type="descriptionType"
         :message="descriptionFeedback"
       >
-        <b-input v-model="form.description" />
+        <b-input v-model="form.description" type="textarea" />
       </b-field>
 
       <b-field label="Type" :type="typeType" :message="typeFeedback">
@@ -50,7 +50,11 @@
       </b-field>
 
       <div class="buttons">
-        <button class="button is-success" @click.prevent="submit">
+        <button
+          class="button is-success"
+          :disabled="!formState"
+          @click.prevent="submit"
+        >
           Save
         </button>
       </div>

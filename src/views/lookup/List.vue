@@ -136,7 +136,7 @@
       <b-modal :active.sync="isModalDelete" has-modal-card>
         <modal-yes-no
           :message="'Are you sure you want to delete this record?'"
-          :data="id"
+          :data="{ id: id }"
           :method="deleteLookup"
         ></modal-yes-no>
       </b-modal>
@@ -196,11 +196,12 @@ export default {
         console.log(err)
       }
     },
-    async deleteLookup(id) {
+    async deleteLookup(payload) {
       this.isModalDelete = true
-      if (id) {
+      if (payload) {
         try {
-          await this.$store.dispatch('lookup/deleteLookup', id)
+          await this.$store.dispatch('lookup/deleteLookup', payload.id)
+          this.getLookups()
         } catch (err) {
           console.log(err)
         }

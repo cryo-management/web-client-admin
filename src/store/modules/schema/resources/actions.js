@@ -118,7 +118,7 @@ export default {
         commit('clearError', null, inRoot)
         const schemas = getters.schemas
         const result = schemas.map((schema) => {
-          return schema._id === payload._id ? payload : schema
+          return schema.id === payload.id ? payload : schema
         })
         commit('setSchemas', result)
         resolve(result)

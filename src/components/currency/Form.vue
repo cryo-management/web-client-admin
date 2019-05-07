@@ -17,7 +17,11 @@
       </b-field>
 
       <div class="buttons">
-        <button class="button is-success" @click.prevent="submit">
+        <button
+          class="button is-success"
+          :disabled="!formState"
+          @click.prevent="submit"
+        >
           Save
         </button>
       </div>
@@ -75,25 +79,8 @@ export default {
         return ''
       }
     },
-    descriptionState() {
-      return this.form.description.length > 0
-    },
-    descriptionType() {
-      if (this.form.description.length === 0) {
-        return 'is-danger'
-      } else {
-        return 'is-success'
-      }
-    },
-    descriptionFeedback() {
-      if (this.form.description.length === 0) {
-        return 'Description is required'
-      } else {
-        return ''
-      }
-    },
     formState() {
-      return this.nameState && this.codeState && this.descriptionState
+      return this.nameState && this.codeState
     },
   },
   methods: {
