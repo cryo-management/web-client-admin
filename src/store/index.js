@@ -7,8 +7,10 @@ import language from './modules/language/store'
 import user from './modules/user/store'
 import group from './modules/group/store'
 import schema from './modules/schema/store'
+import field from './modules/field/store'
 import lookup from './modules/lookup/store'
 import currency from './modules/currency/store'
+import currencyRate from './modules/currencyRate/store'
 import job from './modules/job/store'
 import jobTask from './modules/jobTask/store'
 import jobFollower from './modules/jobFollower/store'
@@ -25,8 +27,10 @@ export default new Vuex.Store({
     user,
     group,
     schema,
+    field,
     lookup,
     currency,
+    currencyRate,
     job,
     jobTask,
     jobFollower,

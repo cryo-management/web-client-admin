@@ -1,27 +1,6 @@
 <template>
   <section>
     <div class="column">
-      <nav class="breadcrumb" aria-label="breadcrumbs">
-        <ul>
-          <li>
-            <router-link to="/">
-              Home
-            </router-link>
-          </li>
-          <li>
-            <router-link to="/admin/currencies">
-              Currency List
-            </router-link>
-          </li>
-          <li>
-            <router-link :to="`/admin/currencies/${currencyID}`">
-              Edit Currency
-            </router-link>
-          </li>
-        </ul>
-      </nav>
-    </div>
-    <div class="column">
       <b-field grouped group-multiline>
         <b-select v-model="perPage">
           <option value="5">
@@ -62,44 +41,83 @@
             <div v-popover:popover v-line-clamp:20="1">{{ props.row.id }}</div>
           </b-table-column>
 
-          <b-table-column field="name" label="Name" sortable>
+          <b-table-column
+            field="from_currency_code"
+            label="From Currency"
+            sortable
+          >
             <vm-popover
               ref="popover"
               trigger="hover"
               placement="top"
-              :content="props.row.name"
+              :content="props.row.from_currency_code"
             >
             </vm-popover>
             <div v-popover:popover v-line-clamp:20="1">
-              {{ props.row.name }}
+              {{ props.row.from_currency_code }}
             </div>
           </b-table-column>
 
-          <b-table-column field="code" label="Code" sortable>
+          <b-table-column field="to_currency_code" label="To Currency" sortable>
             <vm-popover
               ref="popover"
               trigger="hover"
               placement="top"
-              :content="props.row.code"
+              :content="props.row.to_currency_code"
             >
             </vm-popover>
             <div v-popover:popover v-line-clamp:20="1">
-              {{ props.row.code }}
+              {{ props.row.to_currency_code }}
             </div>
           </b-table-column>
 
-          <b-table-column label="Active" sortable centered>
-            <b-icon pack="fas" :icon="props.row.active ? 'check' : ''" />
+          <b-table-column field="value" label="Value" sortable>
+            <vm-popover
+              ref="popover"
+              trigger="hover"
+              placement="top"
+              :content="props.row.value.toString()"
+            >
+            </vm-popover>
+            <div v-popover:popover v-line-clamp:20="1">
+              {{ props.row.value.toString() }}
+            </div>
+          </b-table-column>
+
+          <b-table-column field="start_at" label="Start At" sortable>
+            <vm-popover
+              ref="popover"
+              trigger="hover"
+              placement="top"
+              :content="props.row.start_at"
+            >
+            </vm-popover>
+            <div v-popover:popover v-line-clamp:20="1">
+              {{ props.row.start_at }}
+            </div>
+          </b-table-column>
+
+          <b-table-column field="end_at" label="End At" sortable>
+            <vm-popover
+              ref="popover"
+              trigger="hover"
+              placement="top"
+              :content="props.row.end_at"
+            >
+            </vm-popover>
+            <div v-popover:popover v-line-clamp:20="1">
+              {{ props.row.end_at }}
+            </div>
           </b-table-column>
 
           <b-table-column field="actions" label="Actions" width="90" centered>
             <div class="buttons">
-              <router-link
+              <!-- <router-link
                 class="button is-small"
-                :to="`/admin/currencies/${props.row.id}`"
+                :to="`/admin/currencies/${currencyID}/rates/${props.row.id}`"
               >
                 <b-icon pack="fas" icon="pencil-alt" />
-              </router-link>
+              </router-link> -->
               <b-button
                 type="is-danger"
                 size="is-small"
@@ -111,14 +129,17 @@
           </b-table-column>
         </template>
       </b-table>
-      <router-link class="button is-success" to="/admin/currencies/create">
-        New Currency
+      <router-link
+        class="button is-success"
+        :to="`/admin/currencies/${currencyID}/rates/create`"
+      >
+        Create Rate
       </router-link>
       <b-modal :active.sync="isModalDelete" has-modal-card>
         <modal-yes-no
           :message="'Are you sure you want to delete this record?'"
-          :data="id"
-          :method="deleteCurrency"
+          :data="{ currency_id: currencyID, currency_rate_id: currencyRateID }"
+          :method="deleteCurrencyRate"
         ></modal-yes-no>
       </b-modal>
       <b-loading
@@ -134,7 +155,7 @@
 import ModalYesNo from '@/components/modal/YesNo.vue'
 
 export default {
-  name: 'CurrencyList',
+  name: 'CurrencyRateList',
   components: {
     ModalYesNo,
   },
@@ -147,8 +168,8 @@ export default {
       currentPage: 1,
       perPage: 5,
       isModalDelete: false,
-      currencyRateID: null,
       currencyID: this.$route.params.currency_id,
+      currencyRateID: null,
     }
   },
   computed: {
@@ -159,37 +180,38 @@ export default {
       return this.$store.getters.loading
     },
     dataStore() {
-      return this.$store.getters['currency/currencies']
+      return this.$store.getters['currencyRate/currencyRates']
     },
   },
   watch: {
     dataStore() {
-      this.data = this.$store.getters['currency/currencies']
+      this.data = this.$store.getters['currencyRate/currencyRates']
     },
   },
   mounted() {
-    this.getCurrencies()
+    this.getCurrencyRates(this.currencyID)
   },
   methods: {
-    async getCurrencies() {
+    async getCurrencyRates(currencyID) {
       try {
-        await this.$store.dispatch('currency/getCurrencies')
+        await this.$store.dispatch('currencyRate/getCurrencyRates', currencyID)
       } catch (err) {
         console.log(err)
       }
     },
-    async deleteCurrency(currencyRateID) {
+    async deleteCurrencyRate(payload) {
       this.isModalDelete = true
-      if (currencyRateID) {
+      if (payload) {
         try {
-          await this.$store.dispatch('currency/deleteCurrency', currencyRateID)
+          await this.$store.dispatch('currencyRate/deleteCurrencyRate', payload)
+          this.getCurrencyRates(this.currencyID)
         } catch (err) {
           console.log(err)
         }
       }
     },
     openModalDelete(currencyRateID) {
-      this.id = currencyRateID
+      this.currencyRateID = currencyRateID
       this.isModalDelete = true
     },
   },

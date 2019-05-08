@@ -19,12 +19,19 @@
         </ul>
       </nav>
     </div>
-    <div class="column is-4 is-offset-4">
-      <b-notification v-if="error" type="is-danger">
-        {{ error }}
-      </b-notification>
-      <SchemaForm :form="form" @formToParent="submit" />
-    </div>
+    <b-tabs v-model="activeTab" type="is-boxed" position="is-centered">
+      <b-tab-item label="Schema">
+        <div class="column is-4 is-offset-4">
+          <b-notification v-if="error" type="is-danger">
+            {{ error }}
+          </b-notification>
+          <SchemaForm :form="form" @formToParent="submit" />
+        </div>
+      </b-tab-item>
+      <b-tab-item label="Fields">
+        <FieldList></FieldList>
+      </b-tab-item>
+    </b-tabs>
     <b-loading
       :is-full-page="true"
       :active.sync="loading"
@@ -35,11 +42,13 @@
 
 <script>
 import SchemaForm from '@/components/schema/Form.vue'
+import FieldList from '@/views/field/List.vue'
 
 export default {
   name: 'SchemaEdit',
   components: {
     SchemaForm,
+    FieldList,
   },
   data() {
     return {
@@ -51,6 +60,7 @@ export default {
         module: true,
         active: true,
       },
+      activeTab: 0,
     }
   },
   computed: {

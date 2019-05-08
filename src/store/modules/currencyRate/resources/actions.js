@@ -1,25 +1,24 @@
 import router from '../../../../router'
 import {
-  getCurrencies,
-  createCurrency,
-  getCurrency,
-  updateCurrency,
-  deleteCurrency,
-  getActiveCurrencies,
-} from '../../../../services/currency'
+  getCurrencyRates,
+  createCurrencyRate,
+  getCurrencyRate,
+  updateCurrencyRate,
+  deleteCurrencyRate,
+} from '../../../../services/currencyRate'
 
 const inRoot = {
   root: true,
 }
 
 export default {
-  getCurrencies({ commit }) {
+  getCurrencyRates({ commit }, payload) {
     return new Promise(async (resolve, reject) => {
       try {
         commit('loading', null, inRoot)
         commit('clearError', null, inRoot)
-        const response = await getCurrencies()
-        commit('setCurrencies', response.data)
+        const response = await getCurrencyRates(payload)
+        commit('setCurrencyRates', response.data)
         resolve(response)
       } catch (err) {
         reject(err)
@@ -29,15 +28,19 @@ export default {
       }
     })
   },
-  createCurrency({ commit }, payload) {
+  createCurrencyRate({ commit }, payload) {
     return new Promise(async (resolve, reject) => {
       try {
         commit('loading', null, inRoot)
         commit('clearError', null, inRoot)
-        const response = await createCurrency(payload)
-        commit('setCurrency', response.data)
+        payload.value = +payload.value
+        const response = await createCurrencyRate(
+          payload.from_currency_id,
+          payload
+        )
+        commit('setCurrencyRate', response.data)
         router.push({
-          path: '/admin/currencies',
+          path: `/admin/currencies/${payload.from_currency_id}`,
         })
         resolve(response)
       } catch (err) {
@@ -48,13 +51,16 @@ export default {
       }
     })
   },
-  getCurrency({ commit }, payload) {
+  getCurrencyRate({ commit }, payload) {
     return new Promise(async (resolve, reject) => {
       try {
         commit('loading', null, inRoot)
         commit('clearError', null, inRoot)
-        const response = await getCurrency(payload)
-        commit('setCurrency', response.data)
+        const response = await getCurrencyRate(
+          payload.from_currency_id,
+          payload.currency_rate_id
+        )
+        commit('setCurrencyRate', response.data)
         resolve(response)
       } catch (err) {
         reject(err)
@@ -64,13 +70,18 @@ export default {
       }
     })
   },
-  updateCurrency({ commit }, payload) {
+  updateCurrencyRate({ commit }, payload) {
     return new Promise(async (resolve, reject) => {
       try {
         commit('loading', null, inRoot)
         commit('clearError', null, inRoot)
-        const response = await updateCurrency(payload.id, payload)
-        commit('setCurrency', response.data)
+        payload.value = +payload.value
+        const response = await updateCurrencyRate(
+          payload.from_currency_id,
+          payload.id,
+          payload
+        )
+        commit('setCurrencyRate', response.data)
         resolve(response)
       } catch (err) {
         reject(err)
@@ -80,12 +91,15 @@ export default {
       }
     })
   },
-  deleteCurrency({ commit }, payload) {
+  deleteCurrencyRate({ commit }, payload) {
     return new Promise(async (resolve, reject) => {
       try {
         commit('loading', null, inRoot)
         commit('clearError', null, inRoot)
-        const response = await deleteCurrency(payload)
+        const response = await deleteCurrencyRate(
+          payload.from_currency_id,
+          payload.currency_rate_id
+        )
         resolve(response)
       } catch (err) {
         reject(err)
@@ -95,14 +109,14 @@ export default {
       }
     })
   },
-  setCurrencyCreatedOnList({ commit, getters }, payload) {
+  setCurrencyRateCreatedOnList({ commit, getters }, payload) {
     return new Promise(async (resolve, reject) => {
       try {
         commit('loading', null, inRoot)
         commit('clearError', null, inRoot)
-        const currencies = getters.currencies
-        const result = [...currencies, payload]
-        commit('setCurrencies', result)
+        const currencyRates = getters.currencyRates
+        const result = [...currencyRates, payload]
+        commit('setCurrencyRates', result)
         resolve(result)
       } catch (err) {
         reject(err)
@@ -112,16 +126,16 @@ export default {
       }
     })
   },
-  setCurrencyChangedOnList({ commit, getters }, payload) {
+  setCurrencyRateChangedOnList({ commit, getters }, payload) {
     return new Promise(async (resolve, reject) => {
       try {
         commit('loading', null, inRoot)
         commit('clearError', null, inRoot)
-        const currencies = getters.currencies
-        const result = currencies.map((currency) => {
-          return currency.id === payload.id ? payload : currency
+        const currencyRates = getters.currencyRates
+        const result = currencyRates.map((currencyRate) => {
+          return currencyRate.id === payload.id ? payload : currencyRate
         })
-        commit('setCurrencies', result)
+        commit('setCurrencyRates', result)
         resolve(result)
       } catch (err) {
         reject(err)
@@ -131,26 +145,10 @@ export default {
       }
     })
   },
-  setCurrencyChangedOnCurrency({ commit }, payload) {
+  setCurrencyRateChangedOnCurrencyRate({ commit }, payload) {
     commit('loading', null, inRoot)
     commit('clearError', null, inRoot)
-    commit('setCurrency', payload)
+    commit('setCurrencyRate', payload)
     commit('loaded', null, inRoot)
-  },
-  getActiveCurrencies({ commit }) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        commit('loading', null, inRoot)
-        commit('clearError', null, inRoot)
-        const response = await getActiveCurrencies()
-        // commit('setCurrencies', response.data)
-        resolve(response)
-      } catch (err) {
-        reject(err)
-        commit('error', err, inRoot)
-      } finally {
-        commit('loaded', null, inRoot)
-      }
-    })
   },
 }

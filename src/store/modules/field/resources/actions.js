@@ -1,25 +1,24 @@
 import router from '../../../../router'
 import {
-  getCurrencies,
-  createCurrency,
-  getCurrency,
-  updateCurrency,
-  deleteCurrency,
-  getActiveCurrencies,
-} from '../../../../services/currency'
+  getFields,
+  createField,
+  getField,
+  updateField,
+  deleteField,
+} from '../../../../services/field'
 
 const inRoot = {
   root: true,
 }
 
 export default {
-  getCurrencies({ commit }) {
+  getFields({ commit }, payload) {
     return new Promise(async (resolve, reject) => {
       try {
         commit('loading', null, inRoot)
         commit('clearError', null, inRoot)
-        const response = await getCurrencies()
-        commit('setCurrencies', response.data)
+        const response = await getFields(payload)
+        commit('setFields', response.data)
         resolve(response)
       } catch (err) {
         reject(err)
@@ -29,15 +28,15 @@ export default {
       }
     })
   },
-  createCurrency({ commit }, payload) {
+  createField({ commit }, payload) {
     return new Promise(async (resolve, reject) => {
       try {
         commit('loading', null, inRoot)
         commit('clearError', null, inRoot)
-        const response = await createCurrency(payload)
-        commit('setCurrency', response.data)
+        const response = await createField(payload.schema_id, payload)
+        commit('setField', response.data)
         router.push({
-          path: '/admin/currencies',
+          path: `/admin/schemas/${payload.schema_id}`,
         })
         resolve(response)
       } catch (err) {
@@ -48,13 +47,13 @@ export default {
       }
     })
   },
-  getCurrency({ commit }, payload) {
+  getField({ commit }, payload) {
     return new Promise(async (resolve, reject) => {
       try {
         commit('loading', null, inRoot)
         commit('clearError', null, inRoot)
-        const response = await getCurrency(payload)
-        commit('setCurrency', response.data)
+        const response = await getField(payload.schema_id, payload.field_id)
+        commit('setField', response.data)
         resolve(response)
       } catch (err) {
         reject(err)
@@ -64,13 +63,17 @@ export default {
       }
     })
   },
-  updateCurrency({ commit }, payload) {
+  updateField({ commit }, payload) {
     return new Promise(async (resolve, reject) => {
       try {
         commit('loading', null, inRoot)
         commit('clearError', null, inRoot)
-        const response = await updateCurrency(payload.id, payload)
-        commit('setCurrency', response.data)
+        const response = await updateField(
+          payload.schema_id,
+          payload.id,
+          payload
+        )
+        commit('setField', response.data)
         resolve(response)
       } catch (err) {
         reject(err)
@@ -80,12 +83,12 @@ export default {
       }
     })
   },
-  deleteCurrency({ commit }, payload) {
+  deleteField({ commit }, payload) {
     return new Promise(async (resolve, reject) => {
       try {
         commit('loading', null, inRoot)
         commit('clearError', null, inRoot)
-        const response = await deleteCurrency(payload)
+        const response = await deleteField(payload.schema_id, payload.field_id)
         resolve(response)
       } catch (err) {
         reject(err)
@@ -95,14 +98,14 @@ export default {
       }
     })
   },
-  setCurrencyCreatedOnList({ commit, getters }, payload) {
+  setFieldCreatedOnList({ commit, getters }, payload) {
     return new Promise(async (resolve, reject) => {
       try {
         commit('loading', null, inRoot)
         commit('clearError', null, inRoot)
-        const currencies = getters.currencies
-        const result = [...currencies, payload]
-        commit('setCurrencies', result)
+        const fields = getters.fields
+        const result = [...fields, payload]
+        commit('setFields', result)
         resolve(result)
       } catch (err) {
         reject(err)
@@ -112,16 +115,16 @@ export default {
       }
     })
   },
-  setCurrencyChangedOnList({ commit, getters }, payload) {
+  setFieldChangedOnList({ commit, getters }, payload) {
     return new Promise(async (resolve, reject) => {
       try {
         commit('loading', null, inRoot)
         commit('clearError', null, inRoot)
-        const currencies = getters.currencies
-        const result = currencies.map((currency) => {
-          return currency.id === payload.id ? payload : currency
+        const fields = getters.fields
+        const result = fields.map((field) => {
+          return field.id === payload.id ? payload : field
         })
-        commit('setCurrencies', result)
+        commit('setFields', result)
         resolve(result)
       } catch (err) {
         reject(err)
@@ -131,26 +134,10 @@ export default {
       }
     })
   },
-  setCurrencyChangedOnCurrency({ commit }, payload) {
+  setFieldChangedOnField({ commit }, payload) {
     commit('loading', null, inRoot)
     commit('clearError', null, inRoot)
-    commit('setCurrency', payload)
+    commit('setField', payload)
     commit('loaded', null, inRoot)
-  },
-  getActiveCurrencies({ commit }) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        commit('loading', null, inRoot)
-        commit('clearError', null, inRoot)
-        const response = await getActiveCurrencies()
-        // commit('setCurrencies', response.data)
-        resolve(response)
-      } catch (err) {
-        reject(err)
-        commit('error', err, inRoot)
-      } finally {
-        commit('loaded', null, inRoot)
-      }
-    })
   },
 }

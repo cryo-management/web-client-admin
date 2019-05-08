@@ -14,12 +14,18 @@ import GroupEdit from '../views/group/Edit.vue'
 import SchemaCreate from '../views/schema/Create.vue'
 import SchemaList from '../views/schema/List.vue'
 import SchemaEdit from '../views/schema/Edit.vue'
+import FieldCreate from '../views/field/Create.vue'
+import FieldList from '../views/field/List.vue'
+import FieldEdit from '../views/field/Edit.vue'
 import LookupCreate from '../views/lookup/Create.vue'
 import LookupList from '../views/lookup/List.vue'
 import LookupEdit from '../views/lookup/Edit.vue'
 import CurrencyCreate from '../views/currency/Create.vue'
 import CurrencyList from '../views/currency/List.vue'
 import CurrencyEdit from '../views/currency/Edit.vue'
+import CurrencyRateCreate from '../views/currencyRate/Create.vue'
+import CurrencyRateList from '../views/currencyRate/List.vue'
+import CurrencyRateEdit from '../views/currencyRate/Edit.vue'
 import JobCreate from '../views/job/Create.vue'
 import JobList from '../views/job/List.vue'
 import JobEdit from '../views/job/Edit.vue'
@@ -152,6 +158,30 @@ export default new Router({
       },
     },
     {
+      path: '/admin/schemas/:schema_id/fields/create',
+      name: 'FieldCreate',
+      component: FieldCreate,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/admin/schemas/:schema_id/fields',
+      name: 'FieldList',
+      component: FieldList,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/admin/schemas/:schema_id/fields/:field_id',
+      name: 'FieldEdit',
+      component: FieldEdit,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
       path: '/admin/lookups/create',
       name: 'LookupCreate',
       component: LookupCreate,
@@ -195,6 +225,30 @@ export default new Router({
       path: '/admin/currencies/:currency_id',
       name: 'CurrencyEdit',
       component: CurrencyEdit,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/admin/currencies/:currency_id/rates/create',
+      name: 'CurrencyRateCreate',
+      component: CurrencyRateCreate,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/admin/currencies/:currency_id/rates',
+      name: 'CurrencyRateList',
+      component: CurrencyRateList,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/admin/currencies/:currency_id/rates/:currency_rate_id',
+      name: 'CurrencyRateEdit',
+      component: CurrencyRateEdit,
       meta: {
         requiresAuth: true,
       },

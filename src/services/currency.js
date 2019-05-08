@@ -57,3 +57,18 @@ export const deleteCurrency = (currency_id) => {
     }
   })
 }
+
+export const getActiveCurrencies = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await axios.get('/admin/currencies', {
+        params: {
+          filter: { active: true },
+        },
+      })
+      resolve(response.data)
+    } catch (err) {
+      reject(err)
+    }
+  })
+}

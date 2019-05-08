@@ -77,7 +77,7 @@ export default {
           name: '',
           code: '',
           description: '',
-          schema_id: '',
+          schema_id: this.$route.params.schema_id,
           field_type: '',
           lookup_id: '',
           multivalue: false,
@@ -165,7 +165,7 @@ export default {
         this.nameState &&
         this.codeState &&
         this.descriptionState &&
-        this.typeState
+        this.fieldTypeState
       )
     },
     fieldType() {

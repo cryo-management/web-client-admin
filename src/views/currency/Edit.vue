@@ -42,7 +42,7 @@
 
 <script>
 import CurrencyForm from '@/components/currency/Form.vue'
-import CurrencyRateList from '@/views/currency/currencyRate/List.vue'
+import CurrencyRateList from '@/views/currencyRate/List.vue'
 
 export default {
   name: 'CurrencyEdit',

@@ -9,12 +9,17 @@
             </router-link>
           </li>
           <li>
-            <router-link to="/admin/currencies">
-              Currency List
+            <router-link to="/admin/schemas">
+              Schema List
+            </router-link>
+          </li>
+          <li>
+            <router-link :to="`/admin/schemas/${schemaID}`">
+              Edit Schema
             </router-link>
           </li>
           <li class="is-active">
-            <a href="#" aria-current="page">Create Currency</a>
+            <a href="#" aria-current="page">Create Field</a>
           </li>
         </ul>
       </nav>
@@ -23,7 +28,7 @@
       <b-notification v-if="error" type="is-danger">
         {{ error }}
       </b-notification>
-      <CurrencyForm @formToParent="submit" />
+      <FieldForm @formToParent="submit" />
     </div>
     <b-loading
       :is-full-page="true"
@@ -34,12 +39,17 @@
 </template>
 
 <script>
-import CurrencyForm from '@/components/currency/Form.vue'
+import FieldForm from '@/components/field/Form.vue'
 
 export default {
-  name: 'CurrencyCreate',
+  name: 'FieldCreate',
   components: {
-    CurrencyForm,
+    FieldForm,
+  },
+  data() {
+    return {
+      schemaID: this.$route.params.job_id,
+    }
   },
   computed: {
     error() {
@@ -56,7 +66,7 @@ export default {
     async submit(data) {
       if (data) {
         try {
-          await this.$store.dispatch('currency/createCurrency', data)
+          await this.$store.dispatch('field/createField', data)
         } catch (err) {
           console.log(err)
         }
