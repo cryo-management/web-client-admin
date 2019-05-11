@@ -31,6 +31,12 @@
       <b-tab-item label="Fields">
         <FieldList></FieldList>
       </b-tab-item>
+      <b-tab-item label="Pages">
+        <PageList></PageList>
+      </b-tab-item>
+      <b-tab-item label="Views">
+        <ViewList></ViewList>
+      </b-tab-item>
     </b-tabs>
     <b-loading
       :is-full-page="true"
@@ -43,12 +49,16 @@
 <script>
 import SchemaForm from '@/components/schema/Form.vue'
 import FieldList from '@/views/field/List.vue'
+import PageList from '@/views/page/List.vue'
+import ViewList from '@/views/view/List.vue'
 
 export default {
   name: 'SchemaEdit',
   components: {
     SchemaForm,
     FieldList,
+    PageList,
+    ViewList,
   },
   data() {
     return {
@@ -68,7 +78,7 @@ export default {
       return this.$store.getters.error
     },
     loading() {
-      return this.$store.getters.loading
+      return this.$store.getters.loading > 0
     },
     formStore() {
       return this.$store.getters['schema/schema']

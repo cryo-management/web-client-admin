@@ -11,15 +11,39 @@ import UserEdit from '../views/user/Edit.vue'
 import GroupCreate from '../views/group/Create.vue'
 import GroupList from '../views/group/List.vue'
 import GroupEdit from '../views/group/Edit.vue'
+import TreeCreate from '../views/tree/Create.vue'
+import TreeList from '../views/tree/List.vue'
+import TreeEdit from '../views/tree/Edit.vue'
+import TreeUnitCreate from '../views/treeUnit/Create.vue'
+import TreeUnitList from '../views/treeUnit/List.vue'
+import TreeUnitEdit from '../views/treeUnit/Edit.vue'
+import TreeLevelCreate from '../views/treeLevel/Create.vue'
+import TreeLevelList from '../views/treeLevel/List.vue'
+import TreeLevelEdit from '../views/treeLevel/Edit.vue'
 import SchemaCreate from '../views/schema/Create.vue'
 import SchemaList from '../views/schema/List.vue'
 import SchemaEdit from '../views/schema/Edit.vue'
 import FieldCreate from '../views/field/Create.vue'
 import FieldList from '../views/field/List.vue'
 import FieldEdit from '../views/field/Edit.vue'
+import FieldValidationCreate from '../views/fieldValidation/Create.vue'
+import FieldValidationList from '../views/fieldValidation/List.vue'
+import FieldValidationEdit from '../views/fieldValidation/Edit.vue'
+import PageCreate from '../views/page/Create.vue'
+import PageList from '../views/page/List.vue'
+import PageEdit from '../views/page/Edit.vue'
+import SectionCreate from '../views/section/Create.vue'
+import SectionList from '../views/section/List.vue'
+import SectionEdit from '../views/section/Edit.vue'
+import ViewCreate from '../views/view/Create.vue'
+import ViewList from '../views/view/List.vue'
+import ViewEdit from '../views/view/Edit.vue'
 import LookupCreate from '../views/lookup/Create.vue'
 import LookupList from '../views/lookup/List.vue'
 import LookupEdit from '../views/lookup/Edit.vue'
+import WidgetCreate from '../views/widget/Create.vue'
+import WidgetList from '../views/widget/List.vue'
+import WidgetEdit from '../views/widget/Edit.vue'
 import CurrencyCreate from '../views/currency/Create.vue'
 import CurrencyList from '../views/currency/List.vue'
 import CurrencyEdit from '../views/currency/Edit.vue'
@@ -134,6 +158,78 @@ export default new Router({
       },
     },
     {
+      path: '/admin/trees/create',
+      name: 'TreeCreate',
+      component: TreeCreate,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/admin/trees',
+      name: 'TreeList',
+      component: TreeList,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/admin/trees/:tree_id',
+      name: 'TreeEdit',
+      component: TreeEdit,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/admin/trees/:tree_id/units/create',
+      name: 'TreeUnitCreate',
+      component: TreeUnitCreate,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/admin/trees/:tree_id/units',
+      name: 'TreeUnitList',
+      component: TreeUnitList,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/admin/trees/:tree_id/units/:tree_unit_id',
+      name: 'TreeUnitEdit',
+      component: TreeUnitEdit,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/admin/trees/:tree_id/levels/create',
+      name: 'TreeLevelCreate',
+      component: TreeLevelCreate,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/admin/trees/:tree_id/levels',
+      name: 'TreeLevelList',
+      component: TreeLevelList,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/admin/trees/:tree_id/levels/:tree_level_id',
+      name: 'TreeLevelEdit',
+      component: TreeLevelEdit,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
       path: '/admin/schemas/create',
       name: 'SchemaCreate',
       component: SchemaCreate,
@@ -182,6 +278,103 @@ export default new Router({
       },
     },
     {
+      path: '/admin/schemas/:schema_id/fields/:field_id/validations/create',
+      name: 'FieldValidationCreate',
+      component: FieldValidationCreate,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/admin/schemas/:schema_id/fields/:field_id/validations',
+      name: 'FieldValidationList',
+      component: FieldValidationList,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path:
+        '/admin/schemas/:schema_id/fields/:field_id/validations/:field_validation_id',
+      name: 'FieldValidationEdit',
+      component: FieldValidationEdit,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/admin/schemas/:schema_id/pages/create',
+      name: 'PageCreate',
+      component: PageCreate,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/admin/schemas/:schema_id/pages',
+      name: 'PageList',
+      component: PageList,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/admin/schemas/:schema_id/pages/:page_id',
+      name: 'PageEdit',
+      component: PageEdit,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/admin/schemas/:schema_id/pages/:page_id/sections/create',
+      name: 'SectionCreate',
+      component: SectionCreate,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/admin/schemas/:schema_id/pages/:section_id/sections',
+      name: 'SectionList',
+      component: SectionList,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/admin/schemas/:schema_id/pages/:page_id/sections/:section_id',
+      name: 'SectionEdit',
+      component: SectionEdit,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/admin/schemas/:schema_id/views/create',
+      name: 'ViewCreate',
+      component: ViewCreate,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/admin/schemas/:schema_id/views',
+      name: 'ViewList',
+      component: ViewList,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/admin/schemas/:schema_id/views/:view_id',
+      name: 'ViewEdit',
+      component: ViewEdit,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
       path: '/admin/lookups/create',
       name: 'LookupCreate',
       component: LookupCreate,
@@ -201,6 +394,30 @@ export default new Router({
       path: '/admin/lookups/:lookup_id',
       name: 'LookupEdit',
       component: LookupEdit,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/admin/widgets/create',
+      name: 'WidgetCreate',
+      component: WidgetCreate,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/admin/widgets',
+      name: 'WidgetList',
+      component: WidgetList,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/admin/widgets/:widget_id',
+      name: 'WidgetEdit',
+      component: WidgetEdit,
       meta: {
         requiresAuth: true,
       },

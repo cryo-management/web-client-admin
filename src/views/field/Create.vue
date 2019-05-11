@@ -48,7 +48,7 @@ export default {
   },
   data() {
     return {
-      schemaID: this.$route.params.job_id,
+      schemaID: this.$route.params.schema_id,
     }
   },
   computed: {
@@ -56,7 +56,7 @@ export default {
       return this.$store.getters.error
     },
     loading() {
-      return this.$store.getters.loading
+      return this.$store.getters.loading > 0
     },
   },
   beforeCreate() {

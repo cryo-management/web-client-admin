@@ -46,7 +46,7 @@
 
 <script>
 export default {
-  name: 'LanguageForm',
+  name: 'SchemaForm',
   props: {
     form: {
       type: Object,

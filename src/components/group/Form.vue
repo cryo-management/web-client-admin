@@ -39,7 +39,7 @@
 
 <script>
 export default {
-  name: 'LanguageForm',
+  name: 'GroupForm',
   props: {
     form: {
       type: Object,

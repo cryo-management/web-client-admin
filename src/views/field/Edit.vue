@@ -24,12 +24,19 @@
         </ul>
       </nav>
     </div>
-    <div class="column is-4 is-offset-4">
-      <b-notification v-if="error" type="is-danger">
-        {{ error }}
-      </b-notification>
-      <FieldForm :form="form" @formToParent="submit" />
-    </div>
+    <b-tabs v-model="activeTab" type="is-boxed" position="is-centered">
+      <b-tab-item label="Field">
+        <div class="column is-4 is-offset-4">
+          <b-notification v-if="error" type="is-danger">
+            {{ error }}
+          </b-notification>
+          <FieldForm :form="form" @formToParent="submit" />
+        </div>
+      </b-tab-item>
+      <b-tab-item label="Validations">
+        <FieldValidation></FieldValidation>
+      </b-tab-item>
+    </b-tabs>
     <b-loading
       :is-full-page="true"
       :active.sync="loading"
@@ -40,11 +47,13 @@
 
 <script>
 import FieldForm from '@/components/field/Form.vue'
+import FieldValidation from '@/views/fieldValidation/List.vue'
 
 export default {
   name: 'FieldEdit',
   components: {
     FieldForm,
+    FieldValidation,
   },
   data() {
     return {
@@ -60,6 +69,7 @@ export default {
         multivalue: false,
         active: false,
       },
+      activeTab: 0,
     }
   },
   computed: {
@@ -67,7 +77,7 @@ export default {
       return this.$store.getters.error
     },
     loading() {
-      return this.$store.getters.loading
+      return this.$store.getters.loading > 0
     },
     formStore() {
       return this.$store.getters['field/field']

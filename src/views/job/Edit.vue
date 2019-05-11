@@ -75,7 +75,7 @@ export default {
       return this.$store.getters.error
     },
     loading() {
-      return this.$store.getters.loading
+      return this.$store.getters.loading > 0
     },
     formStore() {
       return this.$store.getters['job/job']

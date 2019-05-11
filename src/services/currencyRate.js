@@ -3,7 +3,7 @@ import axios from 'axios'
 export const getCurrencyRates = (currency_id) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const response = await axios.get(`/admin/currencies/${currency_id}/rates`)
+      const response = await axios.get(`/currencies/${currency_id}/rates`)
       resolve(response.data)
     } catch (err) {
       reject(err)
@@ -15,7 +15,7 @@ export const createCurrencyRate = (currency_id, currencyRate) => {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await axios.post(
-        `/admin/currencies/${currency_id}/rates`,
+        `/currencies/${currency_id}/rates`,
         currencyRate
       )
       resolve(response.data)
@@ -29,7 +29,7 @@ export const getCurrencyRate = (currency_id, currency_rate_id) => {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await axios.get(
-        `/admin/currencies/${currency_id}/rates/${currency_rate_id}`
+        `/currencies/${currency_id}/rates/${currency_rate_id}`
       )
       resolve(response.data)
     } catch (err) {
@@ -46,7 +46,7 @@ export const updateCurrencyRate = (
   return new Promise(async (resolve, reject) => {
     try {
       const response = await axios.patch(
-        `/admin/currencies/${currency_id}/rates/${currency_rate_id}`,
+        `/currencies/${currency_id}/rates/${currency_rate_id}`,
         currencyRate
       )
       resolve(response.data)
@@ -60,7 +60,7 @@ export const deleteCurrencyRate = (currency_id, currency_rate_id) => {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await axios.delete(
-        `/admin/currencies/${currency_id}/rates/${currency_rate_id}`
+        `/currencies/${currency_id}/rates/${currency_rate_id}`
       )
       resolve(response.data)
     } catch (err) {

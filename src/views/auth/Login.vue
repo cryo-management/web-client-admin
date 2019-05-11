@@ -47,7 +47,7 @@ export default {
       return this.$store.getters.error
     },
     loading() {
-      return this.$store.getters.loading
+      return this.$store.getters.loading > 0
     },
     emailState() {
       return this.form.email.length > 0

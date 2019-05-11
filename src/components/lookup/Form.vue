@@ -64,7 +64,7 @@
 
 <script>
 export default {
-  name: 'LanguageForm',
+  name: 'LookupForm',
   props: {
     form: {
       type: Object,

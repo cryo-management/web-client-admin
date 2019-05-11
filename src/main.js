@@ -11,7 +11,7 @@ import './plugins/buefy'
 import './plugins/vue-line-clamp'
 
 axios.defaults.baseURL =
-  process.env.API_ENDPOINT || 'http://localhost:3333/api/v1'
+  process.env.API_ENDPOINT || 'https://localhost:8080/api/v1/core/admin'
 
 import router from './router'
 import store from './store'

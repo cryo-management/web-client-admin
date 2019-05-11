@@ -32,6 +32,9 @@
         <router-link class="navbar-item" to="/admin/groups">
           Groups
         </router-link>
+        <router-link class="navbar-item" to="/admin/trees">
+          Trees
+        </router-link>
         <router-link class="navbar-item" to="/admin/schemas">
           Schemas
         </router-link>
@@ -40,6 +43,9 @@
         </router-link>
         <router-link class="navbar-item" to="/admin/lookups">
           Lookups
+        </router-link>
+        <router-link class="navbar-item" to="/admin/widgets">
+          Widgets
         </router-link>
         <router-link class="navbar-item" to="/admin/jobs">
           Jobs

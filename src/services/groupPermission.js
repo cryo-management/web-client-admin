@@ -3,7 +3,7 @@ import axios from 'axios'
 export const getGroupPermissions = (group_id) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const response = await axios.get(`/admin/groups/${group_id}/permissions`)
+      const response = await axios.get(`/groups/${group_id}/permissions`)
       resolve(response.data)
     } catch (err) {
       reject(err)
@@ -15,7 +15,7 @@ export const createGroupPermission = (group_id, groupPermission) => {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await axios.post(
-        `/admin/groups/${group_id}/permissions`,
+        `/groups/${group_id}/permissions`,
         groupPermission
       )
       resolve(response.data)
@@ -29,7 +29,7 @@ export const getGroupPermission = (group_id, permission_id) => {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await axios.get(
-        `/admin/groups/${group_id}/permissions/${permission_id}`
+        `/groups/${group_id}/permissions/${permission_id}`
       )
       resolve(response.data)
     } catch (err) {
@@ -46,7 +46,7 @@ export const updateGroupPermission = (
   return new Promise(async (resolve, reject) => {
     try {
       const response = await axios.patch(
-        `/admin/groups/${group_id}/permissions/${permission_id}`,
+        `/groups/${group_id}/permissions/${permission_id}`,
         groupPermission
       )
       resolve(response.data)
@@ -60,7 +60,7 @@ export const deleteGroupPermission = (group_id, permission_id) => {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await axios.delete(
-        `/admin/groups/${group_id}/permissions/${permission_id}`
+        `/groups/${group_id}/permissions/${permission_id}`
       )
       resolve(response.data)
     } catch (err) {

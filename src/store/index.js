@@ -6,9 +6,17 @@ import auth from './modules/auth/store'
 import language from './modules/language/store'
 import user from './modules/user/store'
 import group from './modules/group/store'
+import tree from './modules/tree/store'
+import treeUnit from './modules/treeUnit/store'
+import treeLevel from './modules/treeLevel/store'
 import schema from './modules/schema/store'
 import field from './modules/field/store'
+import fieldValidation from './modules/fieldValidation/store'
+import page from './modules/page/store'
+import section from './modules/section/store'
+import view from './modules/view/store'
 import lookup from './modules/lookup/store'
+import widget from './modules/widget/store'
 import currency from './modules/currency/store'
 import currencyRate from './modules/currencyRate/store'
 import job from './modules/job/store'
@@ -26,9 +34,17 @@ export default new Vuex.Store({
     language,
     user,
     group,
+    tree,
+    treeUnit,
+    treeLevel,
     schema,
     field,
+    fieldValidation,
+    page,
+    section,
+    view,
     lookup,
+    widget,
     currency,
     currencyRate,
     job,
@@ -56,10 +72,10 @@ export default new Vuex.Store({
       state.error = null
     },
     loading(state) {
-      state.loading = true
+      state.loading += 1
     },
     loaded(state) {
-      state.loading = false
+      state.loading -= 1
     },
   },
   actions: {},
