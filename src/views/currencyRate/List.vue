@@ -112,12 +112,6 @@
 
           <b-table-column field="actions" label="Actions" width="90" centered>
             <div class="buttons">
-              <!-- <router-link
-                class="button is-small"
-                :to="`/admin/currencies/${currencyID}/rates/${props.row.id}`"
-              >
-                <b-icon pack="fas" icon="pencil-alt" />
-              </router-link> -->
               <b-button
                 type="is-danger"
                 size="is-small"

@@ -117,7 +117,7 @@
             page_id: pageID,
             section_id: sectionID,
           }"
-          :method="deletePage"
+          :method="deleteSection"
         ></modal-yes-no>
       </b-modal>
       <b-loading
@@ -133,7 +133,7 @@
 import ModalYesNo from '@/components/modal/YesNo.vue'
 
 export default {
-  name: 'PageList',
+  name: 'SectionList',
   components: {
     ModalYesNo,
   },
@@ -168,25 +168,25 @@ export default {
     },
   },
   mounted() {
-    this.getPages({
+    this.getSections({
       schema_id: this.schemaID,
       page_id: this.pageID,
     })
   },
   methods: {
-    async getPages(payload) {
+    async getSections(payload) {
       try {
         await this.$store.dispatch('section/getSections', payload)
       } catch (err) {
         console.log(err)
       }
     },
-    async deletePage(payload) {
+    async deleteSection(payload) {
       this.isModalDelete = true
       if (payload) {
         try {
           await this.$store.dispatch('section/deleteSection', payload)
-          this.getPages({
+          this.getSections({
             schema_id: this.schemaID,
             page_id: this.pageID,
           })

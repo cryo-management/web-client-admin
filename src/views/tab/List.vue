@@ -41,29 +41,55 @@
             <div v-popover:popover v-line-clamp:20="1">{{ props.row.id }}</div>
           </b-table-column>
 
-          <b-table-column field="validation" label="Validation" sortable>
+          <b-table-column field="code" label="Code" sortable>
             <vm-popover
               ref="popover"
               trigger="hover"
               placement="top"
-              :content="props.row.validation"
+              :content="props.row.code"
             >
             </vm-popover>
             <div v-popover:popover v-line-clamp:20="1">
-              {{ props.row.validation }}
+              {{ props.row.code }}
             </div>
           </b-table-column>
 
-          <b-table-column field="valid_when" label="When" sortable>
+          <b-table-column field="name" label="Name" sortable>
             <vm-popover
               ref="popover"
               trigger="hover"
               placement="top"
-              :content="props.row.valid_when"
+              :content="props.row.name"
             >
             </vm-popover>
             <div v-popover:popover v-line-clamp:20="1">
-              {{ props.row.valid_when }}
+              {{ props.row.name }}
+            </div>
+          </b-table-column>
+
+          <b-table-column field="description" label="Description" sortable>
+            <vm-popover
+              ref="popover"
+              trigger="hover"
+              placement="top"
+              :content="props.row.description"
+            >
+            </vm-popover>
+            <div v-popover:popover v-line-clamp:20="1">
+              {{ props.row.description }}
+            </div>
+          </b-table-column>
+
+          <b-table-column field="tab_order" label="Order" sortable>
+            <vm-popover
+              ref="popover"
+              trigger="hover"
+              placement="top"
+              :content="props.row.tab_order.toString()"
+            >
+            </vm-popover>
+            <div v-popover:popover v-line-clamp:20="1">
+              {{ props.row.tab_order.toString() }}
             </div>
           </b-table-column>
 
@@ -72,7 +98,7 @@
               <router-link
                 class="button is-small"
                 :to="
-                  `/admin/schemas/${schemaID}/fields/${fieldID}/validations/${
+                  `/admin/schemas/${schemaID}/pages/${pageID}/sections/${sectionID}/tabs/${
                     props.row.id
                   }`
                 "
@@ -92,19 +118,22 @@
       </b-table>
       <router-link
         class="button is-success"
-        :to="`/admin/schemas/${schemaID}/fields/${fieldID}/validations/create`"
+        :to="
+          `/admin/schemas/${schemaID}/pages/${pageID}/sections/${sectionID}/tabs/create`
+        "
       >
-        Create Field Validation
+        Create Tab
       </router-link>
       <b-modal :active.sync="isModalDelete" has-modal-card>
         <modal-yes-no
           :message="'Are you sure you want to delete this record?'"
           :data="{
             schema_id: schemaID,
-            field_id: fieldID,
-            field_validation_id: fieldValidationID,
+            page_id: pageID,
+            section_id: sectionID,
+            tab_id: tabID,
           }"
-          :method="deleteFieldValidation"
+          :method="deleteTabs"
         ></modal-yes-no>
       </b-modal>
       <b-loading
@@ -120,7 +149,7 @@
 import ModalYesNo from '@/components/modal/YesNo.vue'
 
 export default {
-  name: 'FieldValidationList',
+  name: 'TabList',
   components: {
     ModalYesNo,
   },
@@ -134,8 +163,9 @@ export default {
       perPage: 5,
       isModalDelete: false,
       schemaID: this.$route.params.schema_id,
-      fieldID: this.$route.params.field_id,
-      fieldValidationID: null,
+      pageID: this.$route.params.page_id,
+      sectionID: this.$route.params.section_id,
+      tabID: null,
     }
   },
   computed: {
@@ -146,50 +176,46 @@ export default {
       return this.$store.getters.loading > 0
     },
     dataStore() {
-      return this.$store.getters['fieldValidation/fieldValidations']
+      return this.$store.getters['tab/tabs']
     },
   },
   watch: {
     dataStore() {
-      this.data = this.$store.getters['fieldValidation/fieldValidations']
+      this.data = this.$store.getters['tab/tabs']
     },
   },
   mounted() {
-    this.getFieldValidations({
+    this.getTabs({
       schema_id: this.schemaID,
-      field_id: this.fieldID,
+      page_id: this.pageID,
+      section_id: this.sectionID,
     })
   },
   methods: {
-    async getFieldValidations(payload) {
+    async getTabs(payload) {
       try {
-        await this.$store.dispatch(
-          'fieldValidation/getFieldValidations',
-          payload
-        )
+        await this.$store.dispatch('tab/getTabs', payload)
       } catch (err) {
         console.log(err)
       }
     },
-    async deleteFieldValidation(payload) {
+    async deleteTabs(payload) {
       this.isModalDelete = true
       if (payload) {
         try {
-          await this.$store.dispatch(
-            'fieldValidation/deleteFieldValidation',
-            payload
-          )
-          this.getFieldValidations({
+          await this.$store.dispatch('tab/deleteTab', payload)
+          this.getTabs({
             schema_id: this.schemaID,
-            field_id: this.fieldID,
+            page_id: this.pageID,
+            section_id: this.sectionID,
           })
         } catch (err) {
           console.log(err)
         }
       }
     },
-    openModalDelete(fieldValidationID) {
-      this.fieldValidationID = fieldValidationID
+    openModalDelete(tabID) {
+      this.tabID = tabID
       this.isModalDelete = true
     },
   },

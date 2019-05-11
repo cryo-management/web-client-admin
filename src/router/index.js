@@ -35,6 +35,9 @@ import PageEdit from '../views/page/Edit.vue'
 import SectionCreate from '../views/section/Create.vue'
 import SectionList from '../views/section/List.vue'
 import SectionEdit from '../views/section/Edit.vue'
+import TabCreate from '../views/tab/Create.vue'
+import TabList from '../views/tab/List.vue'
+import TabEdit from '../views/tab/Edit.vue'
 import ViewCreate from '../views/view/Create.vue'
 import ViewList from '../views/view/List.vue'
 import ViewEdit from '../views/view/Edit.vue'
@@ -335,7 +338,7 @@ export default new Router({
       },
     },
     {
-      path: '/admin/schemas/:schema_id/pages/:section_id/sections',
+      path: '/admin/schemas/:schema_id/pages/:page_id/sections',
       name: 'SectionList',
       component: SectionList,
       meta: {
@@ -346,6 +349,33 @@ export default new Router({
       path: '/admin/schemas/:schema_id/pages/:page_id/sections/:section_id',
       name: 'SectionEdit',
       component: SectionEdit,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path:
+        '/admin/schemas/:schema_id/pages/:page_id/sections/:section_id/tabs/create',
+      name: 'TabCreate',
+      component: TabCreate,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path:
+        '/admin/schemas/:schema_id/pages/:page_id/sections/:section_id/tabs',
+      name: 'TabList',
+      component: TabList,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path:
+        '/admin/schemas/:schema_id/pages/:page_id/sections/:section_id/tabs/:tab_id',
+      name: 'TabEdit',
+      component: TabEdit,
       meta: {
         requiresAuth: true,
       },
