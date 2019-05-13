@@ -21,18 +21,18 @@
     </div>
 
     <b-tabs v-model="activeTab" type="is-boxed" position="is-centered">
-      <b-tab-item label="Job">
-        <div class="column is-4 is-offset-4">
+      <b-tab-item class="card hero" label="Job">
+        <div class="column">
           <b-notification v-if="error" type="is-danger">
             {{ error }}
           </b-notification>
           <JobForm :form="form" @formToParent="submit" />
         </div>
       </b-tab-item>
-      <b-tab-item label="Followers">
+      <b-tab-item class="card hero" label="Followers">
         <JobFollowerList></JobFollowerList>
       </b-tab-item>
-      <b-tab-item label="Tasks">
+      <b-tab-item class="card hero" label="Tasks">
         <JobTaskList></JobTaskList>
       </b-tab-item>
     </b-tabs>

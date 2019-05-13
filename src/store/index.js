@@ -15,6 +15,7 @@ import fieldValidation from './modules/fieldValidation/store'
 import page from './modules/page/store'
 import section from './modules/section/store'
 import tab from './modules/tab/store'
+import containerStructure from './modules/containerStructure/store'
 import view from './modules/view/store'
 import lookup from './modules/lookup/store'
 import widget from './modules/widget/store'
@@ -44,6 +45,7 @@ export default new Vuex.Store({
     page,
     section,
     tab,
+    containerStructure,
     view,
     lookup,
     widget,

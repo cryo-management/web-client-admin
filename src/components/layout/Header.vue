@@ -1,63 +1,23 @@
 <template>
-  <nav
-    class="navbar is-dark is-fixed-top"
-    role="navigation"
-    aria-label="main navigation"
-  >
+  <nav class="navbar has-shadow is-fixed-top">
     <div class="navbar-brand">
       <router-link class="navbar-item" to="/">
-        <strong>Cryo</strong>
+        <strong>Agile Work</strong>
       </router-link>
-      <a
-        role="button"
-        class="navbar-burger burger"
-        aria-label="menu"
-        aria-expanded="false"
-        data-target="navMenu"
-      >
-        <span aria-hidden="true" />
-        <span aria-hidden="true" />
-        <span aria-hidden="true" />
-      </a>
+
+      <div class="navbar-burger burger" data-target="navMenu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
     </div>
 
     <div id="navMenu" class="navbar-menu">
-      <div class="navbar-start">
-        <router-link class="navbar-item" to="/admin/languages">
-          Languages
-        </router-link>
-        <router-link class="navbar-item" to="/admin/users">
-          Users
-        </router-link>
-        <router-link class="navbar-item" to="/admin/groups">
-          Groups
-        </router-link>
-        <router-link class="navbar-item" to="/admin/trees">
-          Trees
-        </router-link>
-        <router-link class="navbar-item" to="/admin/schemas">
-          Schemas
-        </router-link>
-        <router-link class="navbar-item" to="/admin/currencies">
-          Currencies
-        </router-link>
-        <router-link class="navbar-item" to="/admin/lookups">
-          Lookups
-        </router-link>
-        <router-link class="navbar-item" to="/admin/widgets">
-          Widgets
-        </router-link>
-        <router-link class="navbar-item" to="/admin/jobs">
-          Jobs
-        </router-link>
-      </div>
-
       <div class="navbar-end">
         <div class="navbar-item has-dropdown is-hoverable">
           <a class="navbar-link"
             >{{ currentUser.first_name }} {{ currentUser.last_name }}</a
           >
-          <!-- <a class="navbar-link"></a> -->
           <div class="navbar-dropdown">
             <a class="navbar-item" @click.prevent="logout">Logout</a>
           </div>

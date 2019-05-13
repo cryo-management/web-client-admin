@@ -20,15 +20,15 @@
       </nav>
     </div>
     <b-tabs v-model="activeTab" type="is-boxed" position="is-centered">
-      <b-tab-item label="User">
-        <div class="column is-4 is-offset-4">
+      <b-tab-item class="card hero" label="User">
+        <div class="column">
           <b-notification v-if="error" type="is-danger">
             {{ error }}
           </b-notification>
           <UserForm :form="form" @formToParent="submit" />
         </div>
       </b-tab-item>
-      <b-tab-item label="Groups">
+      <b-tab-item class="card hero" label="Groups">
         <UserGroupList></UserGroupList>
       </b-tab-item>
     </b-tabs>

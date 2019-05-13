@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div class="column is-4 is-offset-4">
+    <div class="column">
       <b-notification v-if="error" type="is-danger">
         {{ error }}
       </b-notification>

@@ -38,6 +38,9 @@ import SectionEdit from '../views/section/Edit.vue'
 import TabCreate from '../views/tab/Create.vue'
 import TabList from '../views/tab/List.vue'
 import TabEdit from '../views/tab/Edit.vue'
+import ContainerStructureCreate from '../views/containerStructure/Create.vue'
+import ContainerStructureList from '../views/containerStructure/List.vue'
+import ContainerStructureEdit from '../views/containerStructure/Edit.vue'
 import ViewCreate from '../views/view/Create.vue'
 import ViewList from '../views/view/List.vue'
 import ViewEdit from '../views/view/Edit.vue'
@@ -376,6 +379,33 @@ export default new Router({
         '/admin/schemas/:schema_id/pages/:page_id/sections/:section_id/tabs/:tab_id',
       name: 'TabEdit',
       component: TabEdit,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path:
+        '/admin/schemas/:schema_id/pages/:page_id/containers/:container_id/types/:container_type/structures/create',
+      name: 'ContainerStructureCreate',
+      component: ContainerStructureCreate,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path:
+        '/admin/schemas/:schema_id/pages/:page_id/containers/:container_id/types/:container_type/structures',
+      name: 'ContainerStructureList',
+      component: ContainerStructureList,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path:
+        '/admin/schemas/:schema_id/pages/:page_id/containers/:container_id/types/:container_type/structures/:container_structure_id',
+      name: 'ContainerStructureEdit',
+      component: ContainerStructureEdit,
       meta: {
         requiresAuth: true,
       },

@@ -25,15 +25,15 @@
       </nav>
     </div>
     <b-tabs v-model="activeTab" type="is-boxed" position="is-centered">
-      <b-tab-item label="Field">
-        <div class="column is-4 is-offset-4">
+      <b-tab-item class="card hero" label="Field">
+        <div class="column">
           <b-notification v-if="error" type="is-danger">
             {{ error }}
           </b-notification>
           <FieldForm :form="form" @formToParent="submit" />
         </div>
       </b-tab-item>
-      <b-tab-item label="Validations">
+      <b-tab-item class="card hero" label="Validations">
         <FieldValidation></FieldValidation>
       </b-tab-item>
     </b-tabs>

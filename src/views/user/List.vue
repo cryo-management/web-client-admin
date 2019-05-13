@@ -14,7 +14,7 @@
         </ul>
       </nav>
     </div>
-    <div class="column">
+    <div class="column card">
       <b-field grouped group-multiline>
         <b-select v-model="perPage">
           <option value="5">

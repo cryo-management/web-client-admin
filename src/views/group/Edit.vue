@@ -20,18 +20,18 @@
       </nav>
     </div>
     <b-tabs v-model="activeTab" type="is-boxed" position="is-centered">
-      <b-tab-item label="Group">
-        <div class="column is-4 is-offset-4">
+      <b-tab-item class="card hero" label="Group">
+        <div class="column">
           <b-notification v-if="error" type="is-danger">
             {{ error }}
           </b-notification>
           <GroupForm :form="form" @formToParent="submit" />
         </div>
       </b-tab-item>
-      <b-tab-item label="Permissions">
+      <b-tab-item class="card hero" label="Permissions">
         <GroupPermissionList></GroupPermissionList>
       </b-tab-item>
-      <b-tab-item label="Users">
+      <b-tab-item class="card hero" label="Users">
         <GroupUserList></GroupUserList>
       </b-tab-item>
     </b-tabs>

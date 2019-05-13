@@ -20,21 +20,21 @@
       </nav>
     </div>
     <b-tabs v-model="activeTab" type="is-boxed" position="is-centered">
-      <b-tab-item label="Schema">
-        <div class="column is-4 is-offset-4">
+      <b-tab-item class="card hero" label="Schema">
+        <div class="column">
           <b-notification v-if="error" type="is-danger">
             {{ error }}
           </b-notification>
           <SchemaForm :form="form" @formToParent="submit" />
         </div>
       </b-tab-item>
-      <b-tab-item label="Fields">
+      <b-tab-item class="card hero" label="Fields">
         <FieldList></FieldList>
       </b-tab-item>
-      <b-tab-item label="Pages">
+      <b-tab-item class="card hero" label="Pages">
         <PageList></PageList>
       </b-tab-item>
-      <b-tab-item label="Views">
+      <b-tab-item class="card hero" label="Views">
         <ViewList></ViewList>
       </b-tab-item>
     </b-tabs>

@@ -38,12 +38,19 @@
         </ul>
       </nav>
     </div>
-    <div class="column is-4 is-offset-4">
-      <b-notification v-if="error" type="is-danger">
-        {{ error }}
-      </b-notification>
-      <TabForm :form="form" @formToParent="submit" />
-    </div>
+    <b-tabs v-model="activeTab" type="is-boxed" position="is-centered">
+      <b-tab-item class="card hero" label="Tab">
+        <div class="column">
+          <b-notification v-if="error" type="is-danger">
+            {{ error }}
+          </b-notification>
+          <TabForm :form="form" @formToParent="submit" />
+        </div>
+      </b-tab-item>
+      <b-tab-item class="card hero" label="Structures inside Tab">
+        <ContainerStructureList></ContainerStructureList>
+      </b-tab-item>
+    </b-tabs>
     <b-loading
       :is-full-page="true"
       :active.sync="loading"
@@ -54,11 +61,13 @@
 
 <script>
 import TabForm from '@/components/tab/Form.vue'
+import ContainerStructureList from '@/views/containerStructure/List.vue'
 
 export default {
   name: 'TabEdit',
   components: {
     TabForm,
+    ContainerStructureList,
   },
   data() {
     return {
@@ -75,6 +84,7 @@ export default {
         page_id: '',
         section_id: '',
       },
+      activeTab: 0,
     }
   },
   computed: {

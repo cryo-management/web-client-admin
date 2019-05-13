@@ -1,20 +1,6 @@
 <template>
   <section>
     <div class="column">
-      <nav class="breadcrumb" aria-label="breadcrumbs">
-        <ul>
-          <li>
-            <router-link to="/">
-              Home
-            </router-link>
-          </li>
-          <li class="is-active">
-            <a href="#" aria-current="page">Schema List</a>
-          </li>
-        </ul>
-      </nav>
-    </div>
-    <div class="column card">
       <b-field grouped group-multiline>
         <b-select v-model="perPage">
           <option value="5">
@@ -55,45 +41,40 @@
             <div v-popover:popover v-line-clamp:20="1">{{ props.row.id }}</div>
           </b-table-column>
 
-          <b-table-column field="name" label="Name" sortable>
+          <b-table-column field="structure_id" label="Structure" sortable>
             <vm-popover
               ref="popover"
               trigger="hover"
               placement="top"
-              :content="props.row.name"
+              :content="props.row.structure_id"
             >
             </vm-popover>
-            <div v-popover:popover v-line-clamp:20="1">
-              {{ props.row.name }}
-            </div>
+            <div v-popover:popover v-line-clamp:20="1">{{
+              props.row.structure_id
+            }}</div>
           </b-table-column>
 
-          <b-table-column field="code" label="Code" sortable>
+          <b-table-column field="structure_type" label="Type" sortable>
             <vm-popover
               ref="popover"
               trigger="hover"
               placement="top"
-              :content="props.row.code"
+              :content="props.row.structure_type"
             >
             </vm-popover>
-            <div v-popover:popover v-line-clamp:20="1">
-              {{ props.row.code }}
-            </div>
+            <div v-popover:popover v-line-clamp:20="1">{{
+              props.row.structure_type
+            }}</div>
           </b-table-column>
-
-          <b-table-column label="Module" sortable centered>
-            <b-icon pack="fas" :icon="props.row.module ? 'check' : ''" />
-          </b-table-column>
-
-          <b-table-column label="Active" sortable centered>
-            <b-icon pack="fas" :icon="props.row.active ? 'check' : ''" />
-          </b-table-column>
-
           <b-table-column field="actions" label="Actions" width="90" centered>
             <div class="buttons">
               <router-link
                 class="button is-small"
-                :to="`/admin/schemas/${props.row.id}`"
+                :to="
+                  `/admin/schemas/${schemaID}/pages/${pageID}/containers/${containerID}/types/${containerType}/structures/${
+                    props.row.id
+                  }`
+                "
               >
                 <b-icon pack="fas" icon="pencil-alt" />
               </router-link>
@@ -108,14 +89,25 @@
           </b-table-column>
         </template>
       </b-table>
-      <router-link class="button is-success" to="/admin/schemas/create">
-        New Schema
+      <router-link
+        class="button is-success"
+        :to="
+          `/admin/schemas/${schemaID}/pages/${pageID}/containers/${containerID}/types/${containerType}/structures/create`
+        "
+      >
+        Add Structure
       </router-link>
       <b-modal :active.sync="isModalDelete" has-modal-card>
         <modal-yes-no
           :message="'Are you sure you want to delete this record?'"
-          :data="{ id: id }"
-          :method="deleteSchema"
+          :data="{
+            schema_id: schemaID,
+            page_id: pageID,
+            container_id: containerID,
+            container_type: containerType,
+            container_structure_id: containerStructureID,
+          }"
+          :method="deleteContainerStructures"
         ></modal-yes-no>
       </b-modal>
       <b-loading
@@ -131,7 +123,7 @@
 import ModalYesNo from '@/components/modal/YesNo.vue'
 
 export default {
-  name: 'SchemaList',
+  name: 'ContainerStructureList',
   components: {
     ModalYesNo,
   },
@@ -144,7 +136,11 @@ export default {
       currentPage: 1,
       perPage: 5,
       isModalDelete: false,
-      id: null,
+      schemaID: this.$route.params.schema_id,
+      pageID: this.$route.params.page_id,
+      containerID: this.$route.params.tab_id || this.$route.params.section_id,
+      containerType: this.$route.path.includes('/tabs') ? 'tab' : 'section',
+      containerStructureID: null,
     }
   },
   computed: {
@@ -155,38 +151,54 @@ export default {
       return this.$store.getters.loading > 0
     },
     dataStore() {
-      return this.$store.getters['schema/schemas']
+      return this.$store.getters['containerStructure/containerStructures']
     },
   },
   watch: {
     dataStore() {
-      this.data = this.$store.getters['schema/schemas']
+      this.data = this.$store.getters['containerStructure/containerStructures']
     },
   },
   mounted() {
-    this.getSchemas()
+    this.getContainerStructures({
+      schema_id: this.schemaID,
+      page_id: this.pageID,
+      container_id: this.containerID,
+      container_type: this.containerType,
+    })
   },
   methods: {
-    async getSchemas() {
+    async getContainerStructures(payload) {
       try {
-        await this.$store.dispatch('schema/getSchemas')
+        await this.$store.dispatch(
+          'containerStructure/getContainerStructures',
+          payload
+        )
       } catch (err) {
         console.log(err)
       }
     },
-    async deleteSchema(payload) {
+    async deleteContainerStructures(payload) {
       this.isModalDelete = true
       if (payload) {
         try {
-          await this.$store.dispatch('schema/deleteSchema', payload.id)
-          this.getSchemas()
+          await this.$store.dispatch(
+            'containerStructure/deleteContainerStructure',
+            payload
+          )
+          this.getContainerStructures({
+            schema_id: this.schemaID,
+            page_id: this.pageID,
+            container_id: this.containerID,
+            container_type: this.containerType,
+          })
         } catch (err) {
           console.log(err)
         }
       }
     },
-    openModalDelete(id) {
-      this.id = id
+    openModalDelete(containerStructureID) {
+      this.containerStructureID = containerStructureID
       this.isModalDelete = true
     },
   },

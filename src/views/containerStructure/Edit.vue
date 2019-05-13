@@ -24,27 +24,17 @@
             </router-link>
           </li>
           <li class="is-active">
-            <a href="#" aria-current="page">Edit Section</a>
+            <a href="#" aria-current="page">Edit Structure</a>
           </li>
         </ul>
       </nav>
     </div>
-    <b-tabs v-model="activeTab" type="is-boxed" position="is-centered">
-      <b-tab-item class="card hero" label="Section">
-        <div class="column">
-          <b-notification v-if="error" type="is-danger">
-            {{ error }}
-          </b-notification>
-          <SectionForm :form="form" @formToParent="submit" />
-        </div>
-      </b-tab-item>
-      <b-tab-item class="card hero" label="Tabs">
-        <TabList></TabList>
-      </b-tab-item>
-      <b-tab-item class="card hero" label="Structures inside Section">
-        <ContainerStructureList></ContainerStructureList>
-      </b-tab-item>
-    </b-tabs>
+    <div class="column card hero">
+      <b-notification v-if="error" type="is-danger">
+        {{ error }}
+      </b-notification>
+      <ContainerStructureForm :form="form" @formToParent="submit" />
+    </div>
     <b-loading
       :is-full-page="true"
       :active.sync="loading"
@@ -54,30 +44,34 @@
 </template>
 
 <script>
-import SectionForm from '@/components/section/Form.vue'
-import TabList from '@/views/tab/List.vue'
-import ContainerStructureList from '@/views/containerStructure/List.vue'
+import ContainerStructureForm from '@/components/containerStructure/Form.vue'
 
 export default {
-  name: 'SectionEdit',
+  name: 'TabEdit',
   components: {
-    SectionForm,
-    TabList,
-    ContainerStructureList,
+    ContainerStructureForm,
   },
   data() {
     return {
       schemaID: this.$route.params.schema_id,
       pageID: this.$route.params.page_id,
       sectionID: this.$route.params.section_id,
+      tabID: this.$route.params.tab_id,
+      containerID: this.$route.params.container_id,
+      containerType: this.$route.params.container_type,
+      containerStructureID: this.$route.params.container_structure_id,
       form: {
-        name: '',
-        code: '',
-        description: '',
         schema_id: '',
         page_id: '',
+        container_id: '',
+        container_type: '',
+        structure_type: '',
+        structure_id: '',
+        position_row: 0,
+        position_column: 0,
+        width: 0,
+        height: 0,
       },
-      activeTab: 0,
     }
   },
   computed: {
@@ -88,19 +82,24 @@ export default {
       return this.$store.getters.loading > 0
     },
     formStore() {
-      return this.$store.getters['section/section']
+      return this.$store.getters['containerStructure/containerStructure']
     },
   },
   watch: {
     formStore() {
-      const page = this.$store.getters['section/section']
+      const page = this.$store.getters['containerStructure/containerStructure']
       if (page) {
         this.form.id = page.id
-        this.form.name = page.name
-        this.form.code = page.code
-        this.form.description = page.description
         this.form.schema_id = page.schema_id
         this.form.page_id = page.page_id
+        this.form.container_id = page.container_id
+        this.form.container_type = page.container_type
+        this.form.structure_type = page.structure_type
+        this.form.structure_id = page.structure_id
+        this.form.position_row = page.position_row
+        this.form.position_column = page.position_column
+        this.form.width = page.width
+        this.form.height = page.height
       }
     },
   },
@@ -109,10 +108,12 @@ export default {
   },
   async created() {
     try {
-      await this.$store.dispatch('section/getSection', {
+      await this.$store.dispatch('containerStructure/getContainerStructure', {
         schema_id: this.schemaID,
         page_id: this.pageID,
-        section_id: this.sectionID,
+        container_id: this.containerID,
+        container_type: this.containerType,
+        container_structure_id: this.containerStructureID,
       })
     } catch (err) {
       console.log(err)
@@ -122,7 +123,10 @@ export default {
     async submit(data) {
       if (data) {
         try {
-          await this.$store.dispatch('section/updateSection', data)
+          await this.$store.dispatch(
+            'containerStructure/updateContainerStructure',
+            data
+          )
         } catch (err) {
           console.log(err)
         }

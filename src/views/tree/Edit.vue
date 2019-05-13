@@ -20,18 +20,18 @@
       </nav>
     </div>
     <b-tabs v-model="activeTab" type="is-boxed" position="is-centered">
-      <b-tab-item label="Tree">
-        <div class="column is-4 is-offset-4">
+      <b-tab-item class="card hero" label="Tree">
+        <div class="column">
           <b-notification v-if="error" type="is-danger">
             {{ error }}
           </b-notification>
           <TreeForm :form="form" @formToParent="submit" />
         </div>
       </b-tab-item>
-      <b-tab-item label="Units">
+      <b-tab-item class="card hero" label="Units">
         <TreeUnitList></TreeUnitList>
       </b-tab-item>
-      <b-tab-item label="Levels">
+      <b-tab-item class="card hero" label="Levels">
         <TreeLevelList></TreeLevelList>
       </b-tab-item>
     </b-tabs>

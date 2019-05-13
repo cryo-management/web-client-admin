@@ -20,15 +20,15 @@
       </nav>
     </div>
     <b-tabs v-model="activeTab" type="is-boxed" position="is-centered">
-      <b-tab-item label="Currency">
-        <div class="column is-4 is-offset-4">
+      <b-tab-item class="card hero" label="Currency">
+        <div class="column">
           <b-notification v-if="error" type="is-danger">
             {{ error }}
           </b-notification>
           <CurrencyForm :form="form" @formToParent="submit" />
         </div>
       </b-tab-item>
-      <b-tab-item label="Rates">
+      <b-tab-item class="card hero" label="Rates">
         <CurrencyRateList></CurrencyRateList>
       </b-tab-item>
     </b-tabs>

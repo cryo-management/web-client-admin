@@ -25,15 +25,15 @@
       </nav>
     </div>
     <b-tabs v-model="activeTab" type="is-boxed" position="is-centered">
-      <b-tab-item label="Page">
-        <div class="column is-4 is-offset-4">
+      <b-tab-item class="card hero" label="Page">
+        <div class="column">
           <b-notification v-if="error" type="is-danger">
             {{ error }}
           </b-notification>
           <PageForm :form="form" @formToParent="submit" />
         </div>
       </b-tab-item>
-      <b-tab-item label="Sections">
+      <b-tab-item class="card hero" label="Sections">
         <SectionList></SectionList>
       </b-tab-item>
     </b-tabs>

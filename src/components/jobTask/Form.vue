@@ -2,7 +2,7 @@
   <section>
     <form ref="form" @submit.prevent="submit">
       <b-tabs v-model="activeTab" type="is-boxed" position="is-centered">
-        <b-tab-item label="General">
+        <b-tab-item class="card hero" label="General">
           <b-field label="Name:" :type="nameType" :message="nameFeedback">
             <b-input v-model="form.name" />
           </b-field>
@@ -65,6 +65,7 @@
           </template>
         </b-tab-item>
         <b-tab-item
+          class="card hero"
           label="Execution"
           :icon="hasExecutionError ? 'exclamation-circle' : ''"
           icon-pack="fas"
@@ -100,6 +101,7 @@
           </b-field>
         </b-tab-item>
         <b-tab-item
+          class="card hero"
           :visible="showRollBack"
           label="Rollback"
           :icon="hasRollbackError ? 'exclamation-circle' : ''"
