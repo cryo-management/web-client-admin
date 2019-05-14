@@ -7,8 +7,16 @@
         :message="structureTypeFeedback"
       >
         <b-select v-model="form.structure_type" expanded>
-          <option value="core_schemas">Schema</option>
-          <option value="core_fields">Field</option>
+          <option value="schema">Schema</option>
+          <option value="field">Field</option>
+        </b-select>
+      </b-field>
+
+      <b-field v-if="form.structure_type === 'field'" label="Schema:">
+        <b-select v-model="schemaID" placeholder="Select a schema" expanded>
+          <option v-for="option in schemas" :key="option.id" :value="option.id">
+            {{ option.name }}
+          </option>
         </b-select>
       </b-field>
 
@@ -17,7 +25,19 @@
         :type="structureType"
         :message="structureFeedback"
       >
-        <b-input v-model="form.structure_id" />
+        <b-select
+          v-model="form.structure_id"
+          placeholder="Select an structure"
+          expanded
+        >
+          <option
+            v-for="option in structures"
+            :key="option.id"
+            :value="option.id"
+          >
+            {{ option.name }}
+          </option>
+        </b-select>
       </b-field>
 
       <b-field
@@ -37,11 +57,7 @@
       </b-field>
 
       <div class="buttons">
-        <button
-          class="button is-success"
-          :disabled="!formState"
-          @click.prevent="submit"
-        >
+        <button class="button is-success" @click.prevent="submit">
           Save
         </button>
       </div>
@@ -67,7 +83,11 @@ export default {
     },
   },
   data() {
-    return {}
+    return {
+      schemas: [],
+      structures: [],
+      schemaID: '',
+    }
   },
   computed: {
     structureTypeState() {
@@ -128,11 +148,44 @@ export default {
         this.permissionTypeState
       )
     },
+    structureTypeData() {
+      return this.form.structure_type
+    },
+  },
+  watch: {
+    structureTypeData(val) {
+      this.structures = val === 'schema' ? this.schemas : []
+      this.schemaID = ''
+      this.form.structure_id = ''
+    },
+    schemaID(val) {
+      this.getFields(val)
+    },
+  },
+  created() {
+    this.getSchemas()
   },
   methods: {
     submit() {
-      if (this.formState) {
-        this.$emit('formToParent', this.form)
+      this.$emit('formToParent', this.form)
+    },
+    async getFields(schemaID) {
+      try {
+        const response = await this.$store.dispatch(
+          'field/getActiveFields',
+          schemaID
+        )
+        this.structures = response.data
+      } catch (err) {
+        console.log(err)
+      }
+    },
+    async getSchemas() {
+      try {
+        const response = await this.$store.dispatch('schema/getSchemas')
+        this.schemas = response.data
+      } catch (err) {
+        console.log(err)
       }
     },
   },

@@ -56,11 +56,7 @@
         <b-input v-model="form.height" />
       </b-field>
       <div class="buttons">
-        <button
-          class="button is-success"
-          :disabled="!formState"
-          @click.prevent="submit"
-        >
+        <button class="button is-success" @click.prevent="submit">
           Save
         </button>
       </div>
@@ -219,13 +215,16 @@ export default {
   },
   methods: {
     submit() {
-      if (this.formState) {
-        this.$emit('formToParent', this.form)
-      }
+      // if (this.formState) {
+      this.$emit('formToParent', this.form)
+      // }
     },
     async getFields(schemaID) {
       try {
-        const response = await this.$store.dispatch('field/getFields', schemaID)
+        const response = await this.$store.dispatch(
+          'field/getActiveFields',
+          schemaID
+        )
         this.structures = response.data
       } catch (err) {
         console.log(err)
@@ -233,7 +232,7 @@ export default {
     },
     async getWidgets() {
       try {
-        const response = await this.$store.dispatch('widget/getWidgets')
+        const response = await this.$store.dispatch('widget/getActiveWidgets')
         this.structures = response.data
       } catch (err) {
         console.log(err)

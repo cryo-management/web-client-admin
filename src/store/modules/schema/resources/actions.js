@@ -5,6 +5,7 @@ import {
   getSchema,
   updateSchema,
   deleteSchema,
+  getActiveSchemas,
 } from '../../../../services/schema'
 
 const inRoot = {
@@ -135,5 +136,20 @@ export default {
     commit('clearError', null, inRoot)
     commit('setSchema', payload)
     commit('loaded', null, inRoot)
+  },
+  getActiveSchemas({ commit }) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        commit('loading', null, inRoot)
+        commit('clearError', null, inRoot)
+        const response = await getActiveSchemas()
+        resolve(response)
+      } catch (err) {
+        reject(err)
+        commit('error', err, inRoot)
+      } finally {
+        commit('loaded', null, inRoot)
+      }
+    })
   },
 }

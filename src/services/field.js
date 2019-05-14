@@ -61,3 +61,18 @@ export const deleteField = (schema_id, field_id) => {
     }
   })
 }
+
+export const getActiveFields = (schema_id) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await axios.get(`/schemas/${schema_id}/fields`, {
+        params: {
+          filter: { active: true },
+        },
+      })
+      resolve(response.data)
+    } catch (err) {
+      reject(err)
+    }
+  })
+}

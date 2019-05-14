@@ -19,11 +19,8 @@
 
       <b-field label="Type" type="is-success">
         <b-select v-model="form.page_type" expanded>
-          <option value="text">Text</option>
-          <option value="integer">Integer</option>
-          <option value="decimal">Decimal</option>
-          <option value="lookup">Lookup</option>
-          <option value="widget">Widget</option>
+          <option value="list">List</option>
+          <option value="form">Form</option>
         </b-select>
       </b-field>
 
@@ -35,11 +32,7 @@
       </b-field>
 
       <div class="buttons">
-        <button
-          class="button is-success"
-          :disabled="!formState"
-          @click.prevent="submit"
-        >
+        <button class="button is-success" @click.prevent="submit">
           Save
         </button>
       </div>
@@ -145,9 +138,7 @@ export default {
   },
   methods: {
     submit() {
-      if (this.formState) {
-        this.$emit('formToParent', this.form)
-      }
+      this.$emit('formToParent', this.form)
     },
   },
 }

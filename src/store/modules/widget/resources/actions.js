@@ -5,6 +5,7 @@ import {
   getWidget,
   updateWidget,
   deleteWidget,
+  getActiveWidgets,
 } from '../../../../services/widget'
 
 const inRoot = {
@@ -135,5 +136,20 @@ export default {
     commit('clearError', null, inRoot)
     commit('setWidget', payload)
     commit('loaded', null, inRoot)
+  },
+  getActiveWidgets({ commit }) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        commit('loading', null, inRoot)
+        commit('clearError', null, inRoot)
+        const response = await getActiveWidgets()
+        resolve(response)
+      } catch (err) {
+        reject(err)
+        commit('error', err, inRoot)
+      } finally {
+        commit('loaded', null, inRoot)
+      }
+    })
   },
 }

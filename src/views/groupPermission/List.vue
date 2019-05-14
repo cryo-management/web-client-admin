@@ -76,11 +76,11 @@
               ref="popover"
               trigger="hover"
               placement="top"
-              :content="props.row.permission_type"
+              :content="props.row.permission_type.toString()"
             >
             </vm-popover>
             <div v-popover:popover v-line-clamp:20="1">
-              {{ props.row.permission_type }}
+              {{ props.row.permission_type.toString() }}
             </div>
           </b-table-column>
 

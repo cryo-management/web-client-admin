@@ -39,7 +39,7 @@ body {
   background-color: #fff;
 }
 .tab-content {
-  padding-top: 0 !important;
+  padding: 0 !important;
 }
 .main-content {
   padding-right: 0.75rem;

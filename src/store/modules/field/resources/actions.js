@@ -5,6 +5,7 @@ import {
   getField,
   updateField,
   deleteField,
+  getActiveFields,
 } from '../../../../services/field'
 
 const inRoot = {
@@ -139,5 +140,20 @@ export default {
     commit('clearError', null, inRoot)
     commit('setField', payload)
     commit('loaded', null, inRoot)
+  },
+  getActiveFields({ commit }, payload) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        commit('loading', null, inRoot)
+        commit('clearError', null, inRoot)
+        const response = await getActiveFields(payload)
+        resolve(response)
+      } catch (err) {
+        reject(err)
+        commit('error', err, inRoot)
+      } finally {
+        commit('loaded', null, inRoot)
+      }
+    })
   },
 }

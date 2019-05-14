@@ -37,11 +37,7 @@
       </b-field>
 
       <div class="buttons">
-        <button
-          class="button is-success"
-          :disabled="!formState"
-          @click.prevent="submit"
-        >
+        <button class="button is-success" @click.prevent="submit">
           Save
         </button>
       </div>
@@ -165,9 +161,7 @@ export default {
   },
   methods: {
     submit() {
-      if (this.formState) {
-        this.$emit('formToParent', this.form)
-      }
+      this.$emit('formToParent', this.form)
     },
   },
 }

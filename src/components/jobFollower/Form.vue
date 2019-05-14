@@ -21,11 +21,7 @@
         </b-select>
       </b-field>
       <div class="buttons">
-        <button
-          class="button is-success"
-          :disabled="!formState"
-          @click.prevent="submit"
-        >
+        <button class="button is-success" @click.prevent="submit">
           Save
         </button>
       </div>

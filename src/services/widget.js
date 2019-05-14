@@ -54,3 +54,18 @@ export const deleteWidget = (widget_id) => {
     }
   })
 }
+
+export const getActiveWidget = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await axios.get('/widgets', {
+        params: {
+          filter: { active: true },
+        },
+      })
+      resolve(response.data)
+    } catch (err) {
+      reject(err)
+    }
+  })
+}

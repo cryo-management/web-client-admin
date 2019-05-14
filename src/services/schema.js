@@ -54,3 +54,18 @@ export const deleteSchema = (schema_id) => {
     }
   })
 }
+
+export const getActiveSchemas = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await axios.get('/schemas', {
+        params: {
+          filter: { active: true },
+        },
+      })
+      resolve(response.data)
+    } catch (err) {
+      reject(err)
+    }
+  })
+}
