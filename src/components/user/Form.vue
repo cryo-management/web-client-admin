@@ -87,7 +87,7 @@ export default {
           email: '',
           password: '',
           language_code: '',
-          active: true,
+          active: false,
         }
       },
     },

@@ -24,7 +24,7 @@
         </ul>
       </nav>
     </div>
-    <div class="column card hero">
+    <div class="column">
       <b-notification v-if="error" type="is-danger">
         {{ error }}
       </b-notification>

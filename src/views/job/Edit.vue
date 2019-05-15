@@ -65,7 +65,7 @@ export default {
         description: '',
         exec_timeout: 60,
         job_type: true,
-        active: true,
+        active: false,
       },
       activeTab: 0,
     }

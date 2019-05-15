@@ -18,6 +18,7 @@ import tab from './modules/tab/store'
 import containerStructure from './modules/containerStructure/store'
 import view from './modules/view/store'
 import lookup from './modules/lookup/store'
+import lookupOption from './modules/lookupOption/store'
 import widget from './modules/widget/store'
 import currency from './modules/currency/store'
 import currencyRate from './modules/currencyRate/store'
@@ -48,6 +49,7 @@ export default new Vuex.Store({
     containerStructure,
     view,
     lookup,
+    lookupOption,
     widget,
     currency,
     currencyRate,

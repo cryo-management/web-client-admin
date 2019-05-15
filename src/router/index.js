@@ -47,6 +47,9 @@ import ViewEdit from '../views/view/Edit.vue'
 import LookupCreate from '../views/lookup/Create.vue'
 import LookupList from '../views/lookup/List.vue'
 import LookupEdit from '../views/lookup/Edit.vue'
+import LookupOptionCreate from '../views/lookupOption/Create.vue'
+import LookupOptionList from '../views/lookupOption/List.vue'
+import LookupOptionEdit from '../views/lookupOption/Edit.vue'
 import WidgetCreate from '../views/widget/Create.vue'
 import WidgetList from '../views/widget/List.vue'
 import WidgetEdit from '../views/widget/Edit.vue'
@@ -454,6 +457,30 @@ export default new Router({
       path: '/admin/lookups/:lookup_id',
       name: 'LookupEdit',
       component: LookupEdit,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/admin/lookups/:lookup_id/options/create',
+      name: 'LookupOptionCreate',
+      component: LookupOptionCreate,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/admin/lookups/:lookup_id/options',
+      name: 'LookupOptionList',
+      component: LookupOptionList,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/admin/lookups/:lookup_id/options/:lookup_option_id',
+      name: 'LookupOptionEdit',
+      component: LookupOptionEdit,
       meta: {
         requiresAuth: true,
       },

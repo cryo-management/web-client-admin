@@ -56,7 +56,7 @@ export default {
       form: {
         name: '',
         code: '',
-        active: true,
+        active: false,
       },
       activeTab: 0,
     }

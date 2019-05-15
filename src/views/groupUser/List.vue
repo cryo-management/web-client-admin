@@ -134,7 +134,7 @@ export default {
       isPaginationSimple: false,
       defaultSortDirection: 'asc',
       currentPage: 1,
-      perPage: 5,
+      perPage: 10,
       isModalDelete: false,
       groupID: this.$route.params.group_id,
       userID: null,

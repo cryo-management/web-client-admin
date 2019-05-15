@@ -68,7 +68,7 @@ export default {
         code: '',
         description: '',
         module: true,
-        active: true,
+        active: false,
       },
       activeTab: 0,
     }

@@ -9,12 +9,17 @@
             </router-link>
           </li>
           <li>
-            <router-link to="/admin/languages">
-              Language List
+            <router-link to="/admin/lookups">
+              Currency List
+            </router-link>
+          </li>
+          <li>
+            <router-link :to="`/admin/lookups/${lookupID}`">
+              Edit Currency
             </router-link>
           </li>
           <li class="is-active">
-            <a href="#" aria-current="page">Edit Language</a>
+            <a href="#" aria-current="page">Create Lookup Option</a>
           </li>
         </ul>
       </nav>
@@ -23,7 +28,7 @@
       <b-notification v-if="error" type="is-danger">
         {{ error }}
       </b-notification>
-      <LanguageForm :form="form" @formToParent="submit" />
+      <LookupOptionForm @formToParent="submit" />
     </div>
     <b-loading
       :is-full-page="true"
@@ -34,21 +39,16 @@
 </template>
 
 <script>
-import LanguageForm from '@/components/language/Form.vue'
+import LookupOptionForm from '@/components/lookupOption/Form.vue'
 
 export default {
-  name: 'LanguageEdit',
+  name: 'LookupOptionCreate',
   components: {
-    LanguageForm,
+    LookupOptionForm,
   },
   data() {
     return {
-      id: this.$route.params.language_id,
-      form: {
-        name: '',
-        code: '',
-        active: false,
-      },
+      lookupID: this.$route.params.lookup_id,
     }
   },
   computed: {
@@ -58,36 +58,15 @@ export default {
     loading() {
       return this.$store.getters.loading > 0
     },
-    formStore() {
-      return this.$store.getters['language/language']
-    },
-  },
-  watch: {
-    formStore() {
-      const language = this.$store.getters['language/language']
-      if (language) {
-        this.form.id = language.id
-        this.form.name = language.name
-        this.form.code = language.code
-        this.form.active = language.active
-      }
-    },
   },
   beforeCreate() {
     this.$store.commit('clearError')
-  },
-  async created() {
-    try {
-      await this.$store.dispatch('language/getLanguage', this.id)
-    } catch (err) {
-      console.log(err)
-    }
   },
   methods: {
     async submit(data) {
       if (data) {
         try {
-          await this.$store.dispatch('language/updateLanguage', data)
+          await this.$store.dispatch('lookupOption/createLookupOption', data)
         } catch (err) {
           console.log(err)
         }

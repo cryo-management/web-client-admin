@@ -9,7 +9,7 @@ export const getContainerStructures = (
   return new Promise(async (resolve, reject) => {
     try {
       const response = await axios.get(
-        `/schemas/${schema_id}/pages/${page_id}/containers/${container_id}/types/${container_type}/structures`
+        `/schemas/${schema_id}/pages/${page_id}/containers/${container_id}/${container_type}/structures`
       )
       resolve(response.data)
     } catch (err) {
@@ -28,7 +28,7 @@ export const createContainerStructure = (
   return new Promise(async (resolve, reject) => {
     try {
       const response = await axios.post(
-        `/schemas/${schema_id}/pages/${page_id}/containers/${container_id}/types/${container_type}/structures`,
+        `/schemas/${schema_id}/pages/${page_id}/containers/${container_id}/${container_type}/structures`,
         section
       )
       resolve(response.data)
@@ -48,7 +48,7 @@ export const getContainerStructure = (
   return new Promise(async (resolve, reject) => {
     try {
       const response = await axios.get(
-        `/schemas/${schema_id}/pages/${page_id}/containers/${container_id}/types/${container_type}/structures/${container_structure_id}`
+        `/schemas/${schema_id}/pages/${page_id}/containers/${container_id}/${container_type}/structures/${container_structure_id}`
       )
       resolve(response.data)
     } catch (err) {
@@ -68,7 +68,7 @@ export const updateContainerStructure = (
   return new Promise(async (resolve, reject) => {
     try {
       const response = await axios.patch(
-        `/schemas/${schema_id}/pages/${page_id}/containers/${container_id}/types/${container_type}/structures/${container_structure_id}`,
+        `/schemas/${schema_id}/pages/${page_id}/containers/${container_id}/${container_type}/structures/${container_structure_id}`,
         section
       )
       resolve(response.data)
@@ -88,7 +88,7 @@ export const deleteContainerStructure = (
   return new Promise(async (resolve, reject) => {
     try {
       const response = await axios.delete(
-        `/schemas/${schema_id}/pages/${page_id}/containers/${container_id}/types/${container_type}/structures/${container_structure_id}`
+        `/schemas/${schema_id}/pages/${page_id}/containers/${container_id}/${container_type}/structures/${container_structure_id}`
       )
       resolve(response.data)
     } catch (err) {
