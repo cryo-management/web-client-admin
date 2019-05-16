@@ -25,7 +25,7 @@
         :current-page.sync="currentPage"
         :pagination-simple="isPaginationSimple"
         :default-sort-direction="defaultSortDirection"
-        default-sort="id"
+        default-sort="task_sequence"
         :hoverable="true"
         :bordered="true"
       >
@@ -39,6 +39,19 @@
             >
             </vm-popover>
             <div v-popover:popover v-line-clamp:20="1">{{ props.row.id }}</div>
+          </b-table-column>
+
+          <b-table-column field="code" label="Code" sortable>
+            <vm-popover
+              ref="popover"
+              trigger="hover"
+              placement="top"
+              :content="props.row.code"
+            >
+            </vm-popover>
+            <div v-popover:popover v-line-clamp:20="1">{{
+              props.row.code
+            }}</div>
           </b-table-column>
 
           <b-table-column field="name" label="Name" sortable>
@@ -64,6 +77,19 @@
             </vm-popover>
             <div v-popover:popover v-line-clamp:20="1">
               {{ props.row.description }}
+            </div>
+          </b-table-column>
+
+          <b-table-column field="task_sequence" label="Sequence" sortable>
+            <vm-popover
+              ref="popover"
+              trigger="hover"
+              placement="top"
+              :content="props.row.task_sequence.toString()"
+            >
+            </vm-popover>
+            <div v-popover:popover v-line-clamp:20="1">
+              {{ props.row.task_sequence.toString() }}
             </div>
           </b-table-column>
 
@@ -123,7 +149,7 @@ export default {
       isPaginationSimple: false,
       defaultSortDirection: 'asc',
       currentPage: 1,
-      perPage: 5,
+      perPage: 10,
       isModalDelete: false,
       jobID: this.$route.params.job_id,
       jobTaskID: null,

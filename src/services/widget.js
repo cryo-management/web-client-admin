@@ -55,7 +55,7 @@ export const deleteWidget = (widget_id) => {
   })
 }
 
-export const getActiveWidget = () => {
+export const getActiveWidgets = () => {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await axios.get('/widgets', {

@@ -62,7 +62,7 @@ export default {
         name: '',
         code: '',
         description: '',
-        active: true,
+        active: false,
       },
       activeTab: 0,
     }

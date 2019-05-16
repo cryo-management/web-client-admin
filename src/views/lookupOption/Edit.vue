@@ -9,12 +9,17 @@
             </router-link>
           </li>
           <li>
-            <router-link to="/admin/languages">
-              Language List
+            <router-link to="/admin/lookups">
+              Lookup List
+            </router-link>
+          </li>
+          <li>
+            <router-link :to="`/admin/lookups/${lookupID}`">
+              Edit Lookup
             </router-link>
           </li>
           <li class="is-active">
-            <a href="#" aria-current="page">Edit Language</a>
+            <a href="#" aria-current="page">Edit Lookup Oprion</a>
           </li>
         </ul>
       </nav>
@@ -23,7 +28,7 @@
       <b-notification v-if="error" type="is-danger">
         {{ error }}
       </b-notification>
-      <LanguageForm :form="form" @formToParent="submit" />
+      <LookupOptionForm :form="form" @formToParent="submit" />
     </div>
     <b-loading
       :is-full-page="true"
@@ -34,19 +39,22 @@
 </template>
 
 <script>
-import LanguageForm from '@/components/language/Form.vue'
+import LookupOptionForm from '@/components/lookupOption/Form.vue'
 
 export default {
-  name: 'LanguageEdit',
+  name: 'LookupOptionEdit',
   components: {
-    LanguageForm,
+    LookupOptionForm,
   },
   data() {
     return {
-      id: this.$route.params.language_id,
+      lookupID: this.$route.params.lookup_id,
+      lookupOptionID: this.$route.params.lookup_option_id,
       form: {
-        name: '',
         code: '',
+        lookup_id: '',
+        value: '',
+        label: '',
         active: false,
       },
     }
@@ -59,17 +67,19 @@ export default {
       return this.$store.getters.loading > 0
     },
     formStore() {
-      return this.$store.getters['language/language']
+      return this.$store.getters['lookupOption/lookupOption']
     },
   },
   watch: {
     formStore() {
-      const language = this.$store.getters['language/language']
-      if (language) {
-        this.form.id = language.id
-        this.form.name = language.name
-        this.form.code = language.code
-        this.form.active = language.active
+      const lookupOption = this.$store.getters['lookupOption/lookupOption']
+      if (lookupOption) {
+        this.form.id = lookupOption.id
+        this.form.code = lookupOption.code
+        this.form.lookup_id = lookupOption.lookup_id
+        this.form.value = lookupOption.value
+        this.form.label = lookupOption.label
+        this.form.active = lookupOption.active
       }
     },
   },
@@ -78,7 +88,10 @@ export default {
   },
   async created() {
     try {
-      await this.$store.dispatch('language/getLanguage', this.id)
+      await this.$store.dispatch('lookupOption/getLookupOption', {
+        lookup_id: this.lookupID,
+        lookup_option_id: this.lookupOptionID,
+      })
     } catch (err) {
       console.log(err)
     }
@@ -87,7 +100,7 @@ export default {
     async submit(data) {
       if (data) {
         try {
-          await this.$store.dispatch('language/updateLanguage', data)
+          await this.$store.dispatch('lookupOption/updateLookupOption', data)
         } catch (err) {
           console.log(err)
         }

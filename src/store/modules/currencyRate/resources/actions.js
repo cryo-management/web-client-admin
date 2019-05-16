@@ -10,7 +10,7 @@ import {
 const inRoot = {
   root: true,
 }
-
+// TODO: Retirar do body os campos de relacionamentos que são passados na url
 export default {
   getCurrencyRates({ commit }, payload) {
     return new Promise(async (resolve, reject) => {

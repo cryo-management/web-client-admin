@@ -41,8 +41,9 @@ export default {
 <style>
 .aside {
   display: block;
-  background-color: #f9f9f9;
-  border-right: 1px solid #dedede;
+  /* background-color: #f9f9f9; */
+  background: hsl(0, 0%, 21%);
+  /* border-right: 1px solid #dedede; */
 }
 .aside .compose {
   height: 95px;
@@ -72,14 +73,14 @@ export default {
   color: #6f7b7e;
 }
 .aside .main .item.active {
-  background-color: #f1f1f1;
-  margin: 0 -50px;
+  background-color: hsl(0, 0%, 96%);
+  margin: 0 -52px;
   padding-left: 50px;
 }
 .aside .main .item:active,
 .aside .main .item:hover {
-  background-color: #f2f2f2;
-  margin: 0 -50px;
+  background-color: hsl(0, 0%, 96%);
+  margin: 0 -52px;
   padding-left: 50px;
 }
 .aside .main .icon {
@@ -89,7 +90,11 @@ export default {
 }
 .aside .main .name {
   font-size: 15px;
-  color: #5d5d5d;
+  color: #f1f1f1;
+  /* color: #5d5d5d; */
   font-weight: 500;
+}
+.aside .main .item:hover .name {
+  color: hsl(0, 0%, 21%);
 }
 </style>

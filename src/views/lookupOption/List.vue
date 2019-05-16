@@ -41,40 +41,54 @@
             <div v-popover:popover v-line-clamp:20="1">{{ props.row.id }}</div>
           </b-table-column>
 
-          <b-table-column field="structure_id" label="Structure" sortable>
+          <b-table-column field="code" label="Code" sortable>
             <vm-popover
               ref="popover"
               trigger="hover"
               placement="top"
-              :content="props.row.structure_id"
+              :content="props.row.code"
             >
             </vm-popover>
             <div v-popover:popover v-line-clamp:20="1">{{
-              props.row.structure_id
+              props.row.code
             }}</div>
           </b-table-column>
 
-          <b-table-column field="structure_type" label="Type" sortable>
+          <b-table-column field="value" label="Value" sortable>
             <vm-popover
               ref="popover"
               trigger="hover"
               placement="top"
-              :content="props.row.structure_type"
+              :content="props.row.value"
             >
             </vm-popover>
             <div v-popover:popover v-line-clamp:20="1">{{
-              props.row.structure_type
+              props.row.value
             }}</div>
           </b-table-column>
+
+          <b-table-column field="label" label="Label" sortable>
+            <vm-popover
+              ref="popover"
+              trigger="hover"
+              placement="top"
+              :content="props.row.label"
+            >
+            </vm-popover>
+            <div v-popover:popover v-line-clamp:20="1">{{
+              props.row.label
+            }}</div>
+          </b-table-column>
+
+          <b-table-column label="Active" sortable centered>
+            <b-icon pack="fas" :icon="props.row.active ? 'check' : ''" />
+          </b-table-column>
+
           <b-table-column field="actions" label="Actions" width="90" centered>
             <div class="buttons">
               <router-link
                 class="button is-small"
-                :to="
-                  `/admin/schemas/${schemaID}/pages/${pageID}/containers/${containerID}/types/${containerType}/structures/${
-                    props.row.id
-                  }`
-                "
+                :to="`/admin/lookups/${lookupID}/options/${props.row.id}`"
               >
                 <b-icon pack="fas" icon="pencil-alt" />
               </router-link>
@@ -91,23 +105,15 @@
       </b-table>
       <router-link
         class="button is-success"
-        :to="
-          `/admin/schemas/${schemaID}/pages/${pageID}/containers/${containerID}/types/${containerType}/structures/create`
-        "
+        :to="`/admin/lookups/${lookupID}/options/create`"
       >
-        Add Structure
+        Create Lookup Option
       </router-link>
       <b-modal :active.sync="isModalDelete" has-modal-card>
         <modal-yes-no
           :message="'Are you sure you want to delete this record?'"
-          :data="{
-            schema_id: schemaID,
-            page_id: pageID,
-            container_id: containerID,
-            container_type: containerType,
-            container_structure_id: containerStructureID,
-          }"
-          :method="deleteContainerStructures"
+          :data="{ lookup_id: lookupID, lookup_option_id: lookupOptionID }"
+          :method="deleteLookupOption"
         ></modal-yes-no>
       </b-modal>
       <b-loading
@@ -123,7 +129,7 @@
 import ModalYesNo from '@/components/modal/YesNo.vue'
 
 export default {
-  name: 'ContainerStructureList',
+  name: 'LookupOptionList',
   components: {
     ModalYesNo,
   },
@@ -136,11 +142,8 @@ export default {
       currentPage: 1,
       perPage: 10,
       isModalDelete: false,
-      schemaID: this.$route.params.schema_id,
-      pageID: this.$route.params.page_id,
-      containerID: this.$route.params.tab_id || this.$route.params.section_id,
-      containerType: this.$route.path.includes('/tabs') ? 'tab' : 'section',
-      containerStructureID: null,
+      lookupID: this.$route.params.lookup_id,
+      lookupOptionID: null,
     }
   },
   computed: {
@@ -151,54 +154,38 @@ export default {
       return this.$store.getters.loading > 0
     },
     dataStore() {
-      return this.$store.getters['containerStructure/containerStructures']
+      return this.$store.getters['lookupOption/lookupOptions']
     },
   },
   watch: {
     dataStore() {
-      this.data = this.$store.getters['containerStructure/containerStructures']
+      this.data = this.$store.getters['lookupOption/lookupOptions']
     },
   },
   mounted() {
-    this.getContainerStructures({
-      schema_id: this.schemaID,
-      page_id: this.pageID,
-      container_id: this.containerID,
-      container_type: this.containerType,
-    })
+    this.getLookupOptions(this.lookupID)
   },
   methods: {
-    async getContainerStructures(payload) {
+    async getLookupOptions(lookupID) {
       try {
-        await this.$store.dispatch(
-          'containerStructure/getContainerStructures',
-          payload
-        )
+        await this.$store.dispatch('lookupOption/getLookupOptions', lookupID)
       } catch (err) {
         console.log(err)
       }
     },
-    async deleteContainerStructures(payload) {
+    async deleteLookupOption(payload) {
       this.isModalDelete = true
       if (payload) {
         try {
-          await this.$store.dispatch(
-            'containerStructure/deleteContainerStructure',
-            payload
-          )
-          this.getContainerStructures({
-            schema_id: this.schemaID,
-            page_id: this.pageID,
-            container_id: this.containerID,
-            container_type: this.containerType,
-          })
+          await this.$store.dispatch('lookupOption/deleteLookupOption', payload)
+          this.getLookupOptions(this.lookupID)
         } catch (err) {
           console.log(err)
         }
       }
     },
-    openModalDelete(containerStructureID) {
-      this.containerStructureID = containerStructureID
+    openModalDelete(lookupOptionID) {
+      this.lookupOptionID = lookupOptionID
       this.isModalDelete = true
     },
   },

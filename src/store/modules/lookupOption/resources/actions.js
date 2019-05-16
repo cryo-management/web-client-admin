@@ -1,24 +1,24 @@
 import router from '../../../../router'
 import {
-  getSections,
-  createSection,
-  getSection,
-  updateSection,
-  deleteSection,
-} from '../../../../services/section'
+  getLookupOptions,
+  createLookupOption,
+  getLookupOption,
+  updateLookupOption,
+  deleteLookupOption,
+} from '../../../../services/lookupOption'
 
 const inRoot = {
   root: true,
 }
 // TODO: Retirar do body os campos de relacionamentos que são passados na url
 export default {
-  getSections({ commit }, payload) {
+  getLookupOptions({ commit }, payload) {
     return new Promise(async (resolve, reject) => {
       try {
         commit('loading', null, inRoot)
         commit('clearError', null, inRoot)
-        const response = await getSections(payload.schema_id, payload.page_id)
-        commit('setSections', response.data)
+        const response = await getLookupOptions(payload)
+        commit('setLookupOptions', response.data)
         resolve(response)
       } catch (err) {
         reject(err)
@@ -28,19 +28,15 @@ export default {
       }
     })
   },
-  createSection({ commit }, payload) {
+  createLookupOption({ commit }, payload) {
     return new Promise(async (resolve, reject) => {
       try {
         commit('loading', null, inRoot)
         commit('clearError', null, inRoot)
-        const response = await createSection(
-          payload.schema_id,
-          payload.page_id,
-          payload
-        )
-        commit('setSection', response.data)
+        const response = await createLookupOption(payload.lookup_id, payload)
+        commit('setLookupOption', response.data)
         router.push({
-          path: `/admin/schemas/${payload.schema_id}/pages/${payload.page_id}`,
+          path: `/admin/lookups/${payload.lookup_id}`,
         })
         resolve(response)
       } catch (err) {
@@ -51,17 +47,16 @@ export default {
       }
     })
   },
-  getSection({ commit }, payload) {
+  getLookupOption({ commit }, payload) {
     return new Promise(async (resolve, reject) => {
       try {
         commit('loading', null, inRoot)
         commit('clearError', null, inRoot)
-        const response = await getSection(
-          payload.schema_id,
-          payload.page_id,
-          payload.section_id
+        const response = await getLookupOption(
+          payload.lookup_id,
+          payload.lookup_option_id
         )
-        commit('setSection', response.data)
+        commit('setLookupOption', response.data)
         resolve(response)
       } catch (err) {
         reject(err)
@@ -71,18 +66,17 @@ export default {
       }
     })
   },
-  updateSection({ commit }, payload) {
+  updateLookupOption({ commit }, payload) {
     return new Promise(async (resolve, reject) => {
       try {
         commit('loading', null, inRoot)
         commit('clearError', null, inRoot)
-        const response = await updateSection(
-          payload.schema_id,
-          payload.page_id,
+        const response = await updateLookupOption(
+          payload.lookup_id,
           payload.id,
           payload
         )
-        commit('setSection', response.data)
+        commit('setLookupOption', response.data)
         resolve(response)
       } catch (err) {
         reject(err)
@@ -92,15 +86,14 @@ export default {
       }
     })
   },
-  deleteSection({ commit }, payload) {
+  deleteLookupOption({ commit }, payload) {
     return new Promise(async (resolve, reject) => {
       try {
         commit('loading', null, inRoot)
         commit('clearError', null, inRoot)
-        const response = await deleteSection(
-          payload.schema_id,
-          payload.page_id,
-          payload.section_id
+        const response = await deleteLookupOption(
+          payload.lookup_id,
+          payload.lookup_option_id
         )
         resolve(response)
       } catch (err) {
@@ -111,14 +104,14 @@ export default {
       }
     })
   },
-  setSectionCreatedOnList({ commit, getters }, payload) {
+  setLookupOptionCreatedOnList({ commit, getters }, payload) {
     return new Promise(async (resolve, reject) => {
       try {
         commit('loading', null, inRoot)
         commit('clearError', null, inRoot)
-        const sections = getters.sections
-        const result = [...sections, payload]
-        commit('setSections', result)
+        const lookupOptions = getters.lookupOptions
+        const result = [...lookupOptions, payload]
+        commit('setLookupOptions', result)
         resolve(result)
       } catch (err) {
         reject(err)
@@ -128,16 +121,16 @@ export default {
       }
     })
   },
-  setSectionChangedOnList({ commit, getters }, payload) {
+  setLookupOptionChangedOnList({ commit, getters }, payload) {
     return new Promise(async (resolve, reject) => {
       try {
         commit('loading', null, inRoot)
         commit('clearError', null, inRoot)
-        const sections = getters.sections
-        const result = sections.map((section) => {
-          return section.id === payload.id ? payload : section
+        const lookupOptions = getters.lookupOptions
+        const result = lookupOptions.map((lookupOption) => {
+          return lookupOption.id === payload.id ? payload : lookupOption
         })
-        commit('setSections', result)
+        commit('setLookupOptions', result)
         resolve(result)
       } catch (err) {
         reject(err)
@@ -147,10 +140,10 @@ export default {
       }
     })
   },
-  setSectionChangedOnPage({ commit }, payload) {
+  setLookupOptionChangedOnLookupOption({ commit }, payload) {
     commit('loading', null, inRoot)
     commit('clearError', null, inRoot)
-    commit('setSection', payload)
+    commit('setLookupOption', payload)
     commit('loaded', null, inRoot)
   },
 }

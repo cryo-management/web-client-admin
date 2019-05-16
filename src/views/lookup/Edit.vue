@@ -19,12 +19,29 @@
         </ul>
       </nav>
     </div>
-    <div class="column card hero">
-      <b-notification v-if="error" type="is-danger">
-        {{ error }}
-      </b-notification>
-      <LookupForm :form="form" @formToParent="submit" />
-    </div>
+    <template v-if="form.type === 'dynamic'">
+      <div class="column card hero">
+        <b-notification v-if="error" type="is-danger">
+          {{ error }}
+        </b-notification>
+        <LookupForm :form="form" @formToParent="submit" />
+      </div>
+    </template>
+    <template v-if="form.type === 'static'">
+      <b-tabs v-model="activeTab" type="is-boxed" position="is-centered">
+        <b-tab-item class="card hero" label="Lookup">
+          <div class="column">
+            <b-notification v-if="error" type="is-danger">
+              {{ error }}
+            </b-notification>
+            <LookupForm :form="form" @formToParent="submit" />
+          </div>
+        </b-tab-item>
+        <b-tab-item class="card hero" label="Options">
+          <LookupOptionList></LookupOptionList>
+        </b-tab-item>
+      </b-tabs>
+    </template>
     <b-loading
       :is-full-page="true"
       :active.sync="loading"
@@ -35,11 +52,13 @@
 
 <script>
 import LookupForm from '@/components/lookup/Form.vue'
+import LookupOptionList from '@/views/lookupOption/List.vue'
 
 export default {
   name: 'LookupEdit',
   components: {
     LookupForm,
+    LookupOptionList,
   },
   data() {
     return {
@@ -55,6 +74,7 @@ export default {
         autocomplete: '',
         active: false,
       },
+      activeTab: 0,
     }
   },
   computed: {

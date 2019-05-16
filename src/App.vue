@@ -4,10 +4,12 @@
       <Header />
     </template>
     <div class="columns">
-      <aside class="column is-2 aside hero is-fullheight">
-        <Menu />
-      </aside>
-      <div class="column is-10 hero is-fullheight has-background-light">
+      <template v-if="currentUser">
+        <aside class="column is-2 aside hero is-fullheight">
+          <Menu />
+        </aside>
+      </template>
+      <div class="column hero is-fullheight has-background-light">
         <router-view class="main-content" />
       </div>
     </div>

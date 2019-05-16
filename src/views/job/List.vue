@@ -94,19 +94,6 @@
             </div>
           </b-table-column>
 
-          <b-table-column field="job_type" label="Type" sortable>
-            <vm-popover
-              ref="popover"
-              trigger="hover"
-              placement="top"
-              :content="props.row.job_type"
-            >
-            </vm-popover>
-            <div v-popover:popover v-line-clamp:20="1">
-              {{ props.row.job_type }}
-            </div>
-          </b-table-column>
-
           <b-table-column label="Active" sortable centered>
             <b-icon pack="fas" :icon="props.row.active ? 'check' : ''" />
           </b-table-column>
@@ -164,7 +151,7 @@ export default {
       isPaginationSimple: false,
       defaultSortDirection: 'asc',
       currentPage: 1,
-      perPage: 5,
+      perPage: 10,
       isModalDelete: false,
       id: null,
     }

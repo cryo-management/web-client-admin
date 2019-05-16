@@ -3,66 +3,68 @@
     <form ref="form" @submit.prevent="submit">
       <b-tabs v-model="activeTab" type="is-boxed" position="is-centered">
         <b-tab-item class="card hero" label="General">
-          <b-field label="Name:" :type="nameType" :message="nameFeedback">
-            <b-input v-model="form.name" />
-          </b-field>
-
-          <b-field label="Code:" :type="codeType" :message="codeFeedback">
-            <b-input v-model="form.code" />
-          </b-field>
-
-          <b-field
-            label="Description:"
-            :type="descriptionType"
-            :message="descriptionFeedback"
-          >
-            <b-input v-model="form.description" type="textarea" />
-          </b-field>
-
-          <b-field
-            label="Sequence:"
-            :type="taskSequenceType"
-            :message="taskSequenceFeedback"
-          >
-            <b-input v-model="form.task_sequence" expanded />
-          </b-field>
-
-          <b-field
-            label="Timeout:"
-            :type="execTimeoutType"
-            :message="execTimeoutFeedback"
-          >
-            <b-input v-model="form.exec_timeout" />
-          </b-field>
-
-          <b-field label="Dependence">
-            <b-input v-model="form.parent_id" />
-          </b-field>
-
-          <b-field
-            label="Action on Fail"
-            :type="actionOnFailType"
-            :message="actionOnFailFeedback"
-          >
-            <b-select v-model="form.action_on_fail" expanded>
-              <option value="continue">Continue</option>
-              <option value="retry_and_continue">Retry and Continue</option>
-              <option value="cancel">Cancel</option>
-              <option value="retry_and_cancel">Retry and Cancel</option>
-              <option value="rollback">Rollback</option>
-              <option value="retry_and_rollback">Retry and Rollback</option>
-            </b-select>
-          </b-field>
-
-          <template v-if="showMaxRetry">
-            <b-field
-              label="Max Retry Attempts:"
-              :type="maxRetryType"
-              :message="maxRetryFeedback"
-            >
-              <b-input v-model="form.max_retry_attempts" expanded />
+          <div class="column">
+            <b-field label="Name:" :type="nameType" :message="nameFeedback">
+              <b-input v-model="form.name" />
             </b-field>
-          </template>
+
+            <b-field label="Code:" :type="codeType" :message="codeFeedback">
+              <b-input v-model="form.code" />
+            </b-field>
+
+            <b-field
+              label="Description:"
+              :type="descriptionType"
+              :message="descriptionFeedback"
+            >
+              <b-input v-model="form.description" type="textarea" />
+            </b-field>
+
+            <b-field
+              label="Sequence:"
+              :type="taskSequenceType"
+              :message="taskSequenceFeedback"
+            >
+              <b-input v-model="form.task_sequence" expanded />
+            </b-field>
+
+            <b-field
+              label="Timeout:"
+              :type="execTimeoutType"
+              :message="execTimeoutFeedback"
+            >
+              <b-input v-model="form.exec_timeout" />
+            </b-field>
+
+            <b-field label="Dependence">
+              <b-input v-model="form.parent_id" />
+            </b-field>
+
+            <b-field
+              label="Action on Fail"
+              :type="actionOnFailType"
+              :message="actionOnFailFeedback"
+            >
+              <b-select v-model="form.action_on_fail" expanded>
+                <option value="continue">Continue</option>
+                <option value="retry_and_continue">Retry and Continue</option>
+                <option value="cancel">Cancel</option>
+                <option value="retry_and_cancel">Retry and Cancel</option>
+                <option value="rollback">Rollback</option>
+                <option value="retry_and_rollback">Retry and Rollback</option>
+              </b-select>
+            </b-field>
+
+            <template v-if="showMaxRetry">
+              <b-field
+                label="Max Retry Attempts:"
+                :type="maxRetryType"
+                :message="maxRetryFeedback"
+              >
+                <b-input v-model="form.max_retry_attempts" expanded />
+              </b-field>
+            </template>
+          </div>
         </b-tab-item>
         <b-tab-item
           class="card hero"
@@ -70,35 +72,37 @@
           :icon="hasExecutionError ? 'exclamation-circle' : ''"
           icon-pack="fas"
         >
-          <b-field
-            label="Execution Action"
-            :type="execActionType"
-            :message="execActionFeedback"
-          >
-            <b-select v-model="form.exec_action" expanded>
-              <option value="exec_query">DB/Query</option>
-              <option value="api_post">REST/POST</option>
-              <option value="api_get">REST/GET</option>
-              <option value="api_patch">REST/PATCH</option>
-              <option value="api_delete">REST/DELETE</option>
-            </b-select>
-          </b-field>
+          <div class="column">
+            <b-field
+              label="Execution Action"
+              :type="execActionType"
+              :message="execActionFeedback"
+            >
+              <b-select v-model="form.exec_action" expanded>
+                <option value="exec_query">DB/Query</option>
+                <option value="api_post">REST/POST</option>
+                <option value="api_get">REST/GET</option>
+                <option value="api_patch">REST/PATCH</option>
+                <option value="api_delete">REST/DELETE</option>
+              </b-select>
+            </b-field>
 
-          <b-field
-            label="Execution Address:"
-            :type="execAddressType"
-            :message="execAddressFeedback"
-          >
-            <b-input v-model="form.exec_address" />
-          </b-field>
+            <b-field
+              label="Execution Address:"
+              :type="execAddressType"
+              :message="execAddressFeedback"
+            >
+              <b-input v-model="form.exec_address" />
+            </b-field>
 
-          <b-field
-            label="Execution Payload:"
-            :type="execPayloadType"
-            :message="execPayloadFeedback"
-          >
-            <b-input v-model="form.exec_payload" type="textarea" />
-          </b-field>
+            <b-field
+              label="Execution Payload:"
+              :type="execPayloadType"
+              :message="execPayloadFeedback"
+            >
+              <b-input v-model="form.exec_payload" type="textarea" />
+            </b-field>
+          </div>
         </b-tab-item>
         <b-tab-item
           class="card hero"
@@ -107,35 +111,37 @@
           :icon="hasRollbackError ? 'exclamation-circle' : ''"
           icon-pack="fas"
         >
-          <b-field
-            label="Rollback Action"
-            :type="rollbackActionType"
-            :message="rollbackActionFeedback"
-          >
-            <b-select v-model="form.rollback_action" expanded>
-              <option value="exec_query">DB/Query</option>
-              <option value="api_post">REST/POST</option>
-              <option value="api_get">REST/GET</option>
-              <option value="api_patch">REST/PATCH</option>
-              <option value="api_delete">REST/DELETE</option>
-            </b-select>
-          </b-field>
+          <div class="column">
+            <b-field
+              label="Rollback Action"
+              :type="rollbackActionType"
+              :message="rollbackActionFeedback"
+            >
+              <b-select v-model="form.rollback_action" expanded>
+                <option value="exec_query">DB/Query</option>
+                <option value="api_post">REST/POST</option>
+                <option value="api_get">REST/GET</option>
+                <option value="api_patch">REST/PATCH</option>
+                <option value="api_delete">REST/DELETE</option>
+              </b-select>
+            </b-field>
 
-          <b-field
-            label="Rollback Address:"
-            :type="rollbackAddressType"
-            :message="rollbackAddressFeedback"
-          >
-            <b-input v-model="form.rollback_address" />
-          </b-field>
+            <b-field
+              label="Rollback Address:"
+              :type="rollbackAddressType"
+              :message="rollbackAddressFeedback"
+            >
+              <b-input v-model="form.rollback_address" />
+            </b-field>
 
-          <b-field
-            label="Rollback Payload:"
-            :type="rollbackPayloadType"
-            :message="rollbackPayloadFeedback"
-          >
-            <b-input v-model="form.rollback_payload" type="textarea" />
-          </b-field>
+            <b-field
+              label="Rollback Payload:"
+              :type="rollbackPayloadType"
+              :message="rollbackPayloadFeedback"
+            >
+              <b-input v-model="form.rollback_payload" type="textarea" />
+            </b-field>
+          </div>
         </b-tab-item>
       </b-tabs>
       <div class="buttons">
