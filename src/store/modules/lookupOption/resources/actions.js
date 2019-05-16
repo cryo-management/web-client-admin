@@ -10,7 +10,6 @@ import {
 const inRoot = {
   root: true,
 }
-// TODO: Retirar do body os campos de relacionamentos que são passados na url
 export default {
   getLookupOptions({ commit }, payload) {
     return new Promise(async (resolve, reject) => {
@@ -139,11 +138,5 @@ export default {
         commit('loaded', null, inRoot)
       }
     })
-  },
-  setLookupOptionChangedOnLookupOption({ commit }, payload) {
-    commit('loading', null, inRoot)
-    commit('clearError', null, inRoot)
-    commit('setLookupOption', payload)
-    commit('loaded', null, inRoot)
   },
 }
