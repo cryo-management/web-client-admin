@@ -80,10 +80,10 @@
             >
               <b-select v-model="form.exec_action" expanded>
                 <option value="exec_query">DB/Query</option>
-                <option value="api_post">REST/POST</option>
-                <option value="api_get">REST/GET</option>
-                <option value="api_patch">REST/PATCH</option>
-                <option value="api_delete">REST/DELETE</option>
+                <option value="api_post">API/POST</option>
+                <option value="api_get">API/GET</option>
+                <option value="api_patch">API/PATCH</option>
+                <option value="api_delete">API/DELETE</option>
               </b-select>
             </b-field>
 
