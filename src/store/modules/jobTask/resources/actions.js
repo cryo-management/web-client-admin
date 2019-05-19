@@ -5,6 +5,7 @@ import {
   getJobTask,
   updateJobTask,
   deleteJobTask,
+  getJobTaskInstances,
 } from '../../../../services/jobTask'
 
 const inRoot = {
@@ -148,5 +149,21 @@ export default {
     commit('clearError', null, inRoot)
     commit('setJobTask', payload)
     commit('loaded', null, inRoot)
+  },
+  getJobTaskInstances({ commit }, payload) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        commit('loading', null, inRoot)
+        commit('clearError', null, inRoot)
+        const response = await getJobTaskInstances(payload)
+        commit('setJobTasks', response.data)
+        resolve(response)
+      } catch (err) {
+        reject(err)
+        commit('error', err, inRoot)
+      } finally {
+        commit('loaded', null, inRoot)
+      }
+    })
   },
 }

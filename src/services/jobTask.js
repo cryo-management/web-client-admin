@@ -59,3 +59,16 @@ export const deleteJobTask = (job_id, job_task_id) => {
     }
   })
 }
+
+export const getJobTaskInstances = (job_instance_id) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await axios.get(
+        `/jobs/${job_instance_id}/instances/tasks/instances`
+      )
+      resolve(response.data)
+    } catch (err) {
+      reject(err)
+    }
+  })
+}

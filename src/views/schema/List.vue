@@ -44,7 +44,7 @@
         :bordered="true"
       >
         <template slot-scope="props">
-          <b-table-column field="id" label="ID" sortable>
+          <b-table-column field="id" label="ID" width="90" sortable>
             <vm-popover
               ref="popover"
               trigger="hover"

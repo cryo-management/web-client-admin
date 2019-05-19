@@ -1,6 +1,20 @@
 <template>
   <section>
     <div class="column">
+      <nav class="breadcrumb" aria-label="breadcrumbs">
+        <ul>
+          <li>
+            <router-link to="/">
+              Home
+            </router-link>
+          </li>
+          <li class="is-active">
+            <a href="#" aria-current="page">Job Instance List</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div class="column card">
       <b-field grouped group-multiline>
         <b-select v-model="perPage">
           <option value="5">
@@ -41,50 +55,38 @@
             <div v-popover:popover v-line-clamp:20="1">{{ props.row.id }}</div>
           </b-table-column>
 
+          <b-table-column field="name" label="Name" width="150" sortable>
+            <vm-popover
+              ref="popover"
+              trigger="hover"
+              placement="top"
+              :content="props.row.name"
+            >
+            </vm-popover>
+            <div v-popover:popover v-line-clamp:20="1">
+              {{ props.row.name }}
+            </div>
+          </b-table-column>
+
+          <b-table-column field="parameters" label="Parameters" sortable>
+            <vm-popover
+              ref="popover"
+              trigger="hover"
+              placement="top"
+              :content="JSON.stringify(props.row.parameters)"
+            >
+            </vm-popover>
+            <div v-popover:popover v-line-clamp:20="1">
+              {{ JSON.stringify(props.row.parameters) }}
+            </div>
+          </b-table-column>
+
           <b-table-column
-            field="from_currency_code"
-            label="From Currency"
+            field="start_at"
+            label="Start At"
+            width="120"
             sortable
           >
-            <vm-popover
-              ref="popover"
-              trigger="hover"
-              placement="top"
-              :content="props.row.from_currency_code"
-            >
-            </vm-popover>
-            <div v-popover:popover v-line-clamp:20="1">
-              {{ props.row.from_currency_code }}
-            </div>
-          </b-table-column>
-
-          <b-table-column field="to_currency_code" label="To Currency" sortable>
-            <vm-popover
-              ref="popover"
-              trigger="hover"
-              placement="top"
-              :content="props.row.to_currency_code"
-            >
-            </vm-popover>
-            <div v-popover:popover v-line-clamp:20="1">
-              {{ props.row.to_currency_code }}
-            </div>
-          </b-table-column>
-
-          <b-table-column field="value" label="Value" sortable>
-            <vm-popover
-              ref="popover"
-              trigger="hover"
-              placement="top"
-              :content="props.row.value.toString()"
-            >
-            </vm-popover>
-            <div v-popover:popover v-line-clamp:20="1">
-              {{ props.row.value.toString() }}
-            </div>
-          </b-table-column>
-
-          <b-table-column field="start_at" label="Start At" sortable>
             <vm-popover
               ref="popover"
               trigger="hover"
@@ -97,45 +99,49 @@
             </div>
           </b-table-column>
 
-          <b-table-column field="end_at" label="End At" sortable>
+          <b-table-column
+            field="finish_at"
+            label="Finish At"
+            width="120"
+            sortable
+          >
             <vm-popover
               ref="popover"
               trigger="hover"
               placement="top"
-              :content="props.row.end_at"
+              :content="props.row.finish_at"
             >
             </vm-popover>
             <div v-popover:popover v-line-clamp:20="1">
-              {{ props.row.end_at }}
+              {{ props.row.finish_at }}
+            </div>
+          </b-table-column>
+
+          <b-table-column field="status" label="Status" width="120" sortable>
+            <vm-popover
+              ref="popover"
+              trigger="hover"
+              placement="top"
+              :content="props.row.status"
+            >
+            </vm-popover>
+            <div v-popover:popover v-line-clamp:20="1">
+              {{ props.row.status }}
             </div>
           </b-table-column>
 
           <b-table-column field="actions" label="Actions" width="90" centered>
             <div class="buttons">
-              <b-button
-                type="is-danger"
-                size="is-small"
-                @click.prevent="openModalDelete(props.row.id)"
+              <router-link
+                class="button is-small"
+                :to="`/admin/jobs/${props.row.id}/instances/tasks/instances`"
               >
-                <b-icon pack="fas" icon="trash-alt" />
-              </b-button>
+                <b-icon pack="fas" icon="eye" />
+              </router-link>
             </div>
           </b-table-column>
         </template>
       </b-table>
-      <router-link
-        class="button is-success"
-        :to="`/admin/currencies/${currencyID}/rates/create`"
-      >
-        Create Rate
-      </router-link>
-      <b-modal :active.sync="isModalDelete" has-modal-card>
-        <modal-yes-no
-          :message="'Are you sure you want to delete this record?'"
-          :data="{ currency_id: currencyID, currency_rate_id: currencyRateID }"
-          :method="deleteCurrencyRate"
-        ></modal-yes-no>
-      </b-modal>
       <b-loading
         :is-full-page="true"
         :active.sync="loading"
@@ -146,13 +152,8 @@
 </template>
 
 <script>
-import ModalYesNo from '@/components/modal/YesNo.vue'
-
 export default {
-  name: 'CurrencyRateList',
-  components: {
-    ModalYesNo,
-  },
+  name: 'JobInstanceList',
   data() {
     return {
       data: [],
@@ -162,8 +163,7 @@ export default {
       currentPage: 1,
       perPage: 10,
       isModalDelete: false,
-      currencyID: this.$route.params.currency_id,
-      currencyRateID: null,
+      id: null,
     }
   },
   computed: {
@@ -174,39 +174,24 @@ export default {
       return this.$store.getters.loading > 0
     },
     dataStore() {
-      return this.$store.getters['currencyRate/currencyRates']
+      return this.$store.getters['job/jobs']
     },
   },
   watch: {
     dataStore() {
-      this.data = this.$store.getters['currencyRate/currencyRates']
+      this.data = this.$store.getters['job/jobs']
     },
   },
   mounted() {
-    this.getCurrencyRates(this.currencyID)
+    this.getJobInstances()
   },
   methods: {
-    async getCurrencyRates(currencyID) {
+    async getJobInstances() {
       try {
-        await this.$store.dispatch('currencyRate/getCurrencyRates', currencyID)
+        await this.$store.dispatch('job/getJobInstances')
       } catch (err) {
         console.log(err)
       }
-    },
-    async deleteCurrencyRate(payload) {
-      this.isModalDelete = true
-      if (payload) {
-        try {
-          await this.$store.dispatch('currencyRate/deleteCurrencyRate', payload)
-          this.getCurrencyRates(this.currencyID)
-        } catch (err) {
-          console.log(err)
-        }
-      }
-    },
-    openModalDelete(currencyRateID) {
-      this.currencyRateID = currencyRateID
-      this.isModalDelete = true
     },
   },
 }

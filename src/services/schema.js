@@ -47,7 +47,7 @@ export const updateSchema = (schema_id, schema) => {
 export const deleteSchema = (schema_id) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const response = await axios.delete(`/schemas/${schema_id}`)
+      const response = await axios.delete(`/schemas/${schema_id}/start`)
       resolve(response.data)
     } catch (err) {
       reject(err)

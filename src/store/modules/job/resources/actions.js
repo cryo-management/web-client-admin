@@ -5,6 +5,7 @@ import {
   getJob,
   updateJob,
   deleteJob,
+  getJobInstances,
 } from '../../../../services/job'
 
 const inRoot = {
@@ -137,5 +138,21 @@ export default {
     commit('clearError', null, inRoot)
     commit('setJob', payload)
     commit('loaded', null, inRoot)
+  },
+  getJobInstances({ commit }) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        commit('loading', null, inRoot)
+        commit('clearError', null, inRoot)
+        const response = await getJobInstances()
+        commit('setJobs', response.data)
+        resolve(response)
+      } catch (err) {
+        reject(err)
+        commit('error', err, inRoot)
+      } finally {
+        commit('loaded', null, inRoot)
+      }
+    })
   },
 }

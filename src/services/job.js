@@ -54,3 +54,14 @@ export const deleteJob = (job_id) => {
     }
   })
 }
+
+export const getJobInstances = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await axios.get('/jobs/instances')
+      resolve(response.data)
+    } catch (err) {
+      reject(err)
+    }
+  })
+}

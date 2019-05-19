@@ -28,6 +28,9 @@
       <router-link class="item" to="/admin/jobs">
         <span class="name">Jobs</span>
       </router-link>
+      <router-link class="item" to="/admin/jobs/instances">
+        <span class="name">Job Instances</span>
+      </router-link>
     </div>
   </div>
 </template>

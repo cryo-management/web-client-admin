@@ -62,9 +62,11 @@ import CurrencyRateEdit from '../views/currencyRate/Edit.vue'
 import JobCreate from '../views/job/Create.vue'
 import JobList from '../views/job/List.vue'
 import JobEdit from '../views/job/Edit.vue'
+import JobInstanceList from '../views/job/jobInstance/List.vue'
 import JobTaskCreate from '../views/jobTask/Create.vue'
 import JobTaskList from '../views/jobTask/List.vue'
 import JobTaskEdit from '../views/jobTask/Edit.vue'
+import JobTaskInstanceList from '../views/jobTask/jobTaskInstance/List.vue'
 import JobFollowerCreate from '../views/jobFollower/Create.vue'
 import JobFollowerList from '../views/jobFollower/List.vue'
 import UserGroupCreate from '../views/userGroup/Create.vue'
@@ -566,6 +568,14 @@ export default new Router({
       },
     },
     {
+      path: '/admin/jobs/instances',
+      name: 'JobInstanceList',
+      component: JobInstanceList,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
       path: '/admin/jobs',
       name: 'JobList',
       component: JobList,
@@ -577,6 +587,14 @@ export default new Router({
       path: '/admin/jobs/:job_id',
       name: 'JobEdit',
       component: JobEdit,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/admin/jobs/:job_instance_id/instances/tasks/instances',
+      name: 'JobTaskInstanceList',
+      component: JobTaskInstanceList,
       meta: {
         requiresAuth: true,
       },

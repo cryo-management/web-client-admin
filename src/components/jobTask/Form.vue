@@ -95,11 +95,7 @@
               <b-input v-model="form.exec_address" />
             </b-field>
 
-            <b-field
-              label="Execution Payload:"
-              :type="execPayloadType"
-              :message="execPayloadFeedback"
-            >
+            <b-field label="Execution Payload:">
               <b-input v-model="form.exec_payload" type="textarea" />
             </b-field>
           </div>
@@ -352,23 +348,6 @@ export default {
         return ''
       }
     },
-    execPayloadState() {
-      return this.form.exec_payload.length > 0
-    },
-    execPayloadType() {
-      if (this.form.exec_payload.length === 0) {
-        return 'is-danger'
-      } else {
-        return 'is-success'
-      }
-    },
-    execPayloadFeedback() {
-      if (this.form.exec_payload.length === 0) {
-        return 'Execution Payload is required'
-      } else {
-        return ''
-      }
-    },
     rollbackActionState() {
       return (
         (this.showRollBack && this.form.rollback_action.length > 0) ||
@@ -440,18 +419,13 @@ export default {
         this.maxRetryState &&
         this.execActionState &&
         this.execAddressState &&
-        this.execPayloadState &&
         this.rollbackActionState &&
         this.rollbackAddressState &&
         this.rollbackPayloadState
       )
     },
     hasExecutionError() {
-      return !(
-        this.execActionState &&
-        this.execAddressState &&
-        this.execPayloadState
-      )
+      return !(this.execActionState && this.execAddressState)
     },
     hasRollbackError() {
       return !(
